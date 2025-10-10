@@ -12,7 +12,8 @@ image:
 
 ---
 
-## spaceship demo
+## spaceship 表格样例
+这是一个样例
 
 |              Stage | Direct Products | ATP Yields |
 | -----------------: | --------------: | ---------: |
