@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f7">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, user-scalable=no initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+<meta name="generator" content="Jekyll v4.4.1">
+<meta property="og:title" content="《大模型基础》阅读笔记">
+<meta property="og:locale" content="en">
+<meta name="description" content="https://github.com/ZJU-LLMs/Foundations-of-LLMs">
+<meta property="og:description" content="https://github.com/ZJU-LLMs/Foundations-of-LLMs">
+<link rel="canonical" href="https://linbonanlibra.github.io/posts/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80-%E7%AC%94%E8%AE%B0/">
+<meta property="og:url" content="https://linbonanlibra.github.io/posts/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80-%E7%AC%94%E8%AE%B0/">
+<meta property="og:site_name" content="24601">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-10-10T19:58:00+08:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="《大模型基础》阅读笔记"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-10-10T19:58:00+08:00","datePublished":"2025-10-10T19:58:00+08:00","description":"https://github.com/ZJU-LLMs/Foundations-of-LLMs","headline":"《大模型基础》阅读笔记","mainEntityOfPage":{"@type":"WebPage","@id":"https://linbonanlibra.github.io/posts/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80-%E7%AC%94%E8%AE%B0/"},"url":"https://linbonanlibra.github.io/posts/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80-%E7%AC%94%E8%AE%B0/"}</script><title>《大模型基础》阅读笔记 | 24601</title>
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
+<link rel="manifest" href="/assets/img/favicons/site.webmanifest">
+<link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
+<meta name="apple-mobile-web-app-title" content="24601">
+<meta name="application-name" content="24601">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="/assets/css/jekyll-theme-chirpy.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&amp;family=Source+Sans+Pro:wght@400;600;700;900&amp;display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-web/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tocbot@4.36.4/dist/tocbot.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css"> <script src="/assets/js/dist/theme.min.js"></script> <script defer src="https://cdn.jsdelivr.net/combine/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js,npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.umd.min.js,npm/glightbox@3.3.0/dist/js/glightbox.min.js,npm/clipboard@2.0.11/dist/clipboard.min.js,npm/dayjs@1.11.18/dayjs.min.js,npm/dayjs@1.11.18/locale/en.js,npm/dayjs@1.11.18/plugin/relativeTime.js,npm/dayjs@1.11.18/plugin/localizedFormat.js,npm/tocbot@4.36.4/dist/tocbot.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script defer src="/app.min.js?baseurl=&amp;register=true"></script>
+</head>
+<body>
+<aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column align-items-end"><header class="profile-wrapper"> <a href="/" id="avatar" class="rounded-circle"><img src="/assets/img/avatar/avatar.png" width="112" height="112" alt="avatar" onerror="this.style.display='none'"></a> <a class="site-title d-block" href="/">24601</a><p class="site-subtitle fst-italic mb-0">-- rua rua rua --</p></header><nav class="flex-column flex-grow-1 w-100 ps-0"><ul class="nav">
+<li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home"></i> <span>HOME</span> </a>
+</li>
+<li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream"></i> <span>CATEGORIES</span> </a>
+</li>
+<li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags"></i> <span>TAGS</span> </a>
+</li>
+<li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive"></i> <span>ARCHIVES</span> </a>
+</li>
+<li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle"></i> <span>ABOUT</span> </a>
+</li>
+</ul></nav><div class="sidebar-bottom d-flex flex-wrap align-items-center w-100"> <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle"> <i class="fas fa-adjust"></i> </button> <span class="icon-border"></span> <a href="https://github.com/linbonanlibra" aria-label="github" target="_blank" rel="noopener noreferrer"> <i class="fab fa-github"></i> </a> <a href="javascript:location.href%20=%20'mailto:'%20+%20['929lbn','163.com'].join('@')" aria-label="email"> <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss"> <i class="fas fa-rss"></i> </a>
+</div></aside><div id="main-wrapper" class="d-flex justify-content-center">
+<div class="container d-flex flex-column px-xxl-5">
+<header id="topbar-wrapper" class="flex-shrink-0" aria-label="Top Bar"><div id="topbar" class="d-flex align-items-center justify-content-between px-lg-3 h-100">
+<nav id="breadcrumb" aria-label="Breadcrumb"> <span> <a href="/">Home</a> </span> <span>《大模型基础》阅读笔记</span></nav><button type="button" id="sidebar-trigger" class="btn btn-link" aria-label="Sidebar"> <i class="fas fa-bars fa-fw"></i> </button><div id="topbar-title"> Post</div>
+<button type="button" id="search-trigger" class="btn btn-link" aria-label="Search"> <i class="fas fa-search fa-fw"></i> </button> <search id="search" class="align-items-center ms-3 ms-lg-0"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> </search> <button type="button" class="btn btn-link text-decoration-none" id="search-cancel">Cancel</button>
+</div></header><div class="row flex-grow-1">
+<main aria-label="Main Content" class="col-12 col-lg-11 col-xl-9 px-md-4"><article class="px-1" data-toc="true"><header><h1 data-toc-skip>《大模型基础》阅读笔记</h1>
+<div class="post-meta text-muted"> <span> Posted <time data-ts="1760097480" data-df="ll" data-bs-toggle="tooltip" data-bs-placement="bottom"> Oct 10, 2025 </time> </span><div class="d-flex justify-content-between"> <span> By <em> <a href="https://github.com/linbonanlibra">linbonanlibra</a> </em> </span><div> <span class="readtime" data-bs-toggle="tooltip" data-bs-placement="bottom" title="4260 words"> <em>23 min</em> read</span>
+</div>
+</div>
+</div></header><div id="toc-bar" class="d-flex align-items-center justify-content-between invisible"> <span class="label text-truncate">《大模型基础》阅读笔记</span> <button type="button" class="toc-trigger btn me-1"> <i class="fa-solid fa-list-ul fa-fw"></i> </button>
+</div>
+<button id="toc-solo-trigger" type="button" class="toc-trigger btn btn-outline-secondary btn-sm"> <span class="label ps-2 pe-1">Contents</span> <i class="fa-solid fa-angle-right fa-fw"></i> </button> <dialog id="toc-popup" class="p-0"><div class="header d-flex flex-row align-items-center justify-content-between">
+<div class="label text-truncate py-2 ms-4">《大模型基础》阅读笔记</div>
+<button id="toc-popup-close" type="button" class="btn mx-1 my-1 opacity-75"> <i class="fas fa-close"></i> </button>
+</div>
+<div id="toc-popup-content" class="px-4 py-3 pb-4"></div></dialog><div class="content">
+<blockquote><p>https://github.com/ZJU-LLMs/Foundations-of-LLMs</p></blockquote>
+<h2 id="14-基于-transformer-的语言模型-采样方法">
+<span class="me-2">1.4 基于 Transformer 的语言模型 采样方法</span><a href="#14-%E5%9F%BA%E4%BA%8E-transformer-%E7%9A%84%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B-%E9%87%87%E6%A0%B7%E6%96%B9%E6%B3%95" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p>1.4.1 概率最大化</p>
+<ul>
+<li>贪心 在每轮预测中都选择概率最大的词。但当前概率大的词有可能导致后续的词概率都很小</li>
+<li>波束搜索 每轮保留可能性大的 B 个，最后在 M 个集合里找联合概率最大的。不足是概率最大的文本通常是 <strong>最为常见的文本</strong> ，太“废话” 1.4.2 随机采样</li>
+<li>top-k 在每轮预测中都选取 K 个概率最高的词作为候选词，然后对这些词的概率用 softmax 函数进行归一化，再根据分布采样出本轮的预测的结果。不足是：<font color="#CD2626">K值固定，采样结果受候选词分布情况影响大，分布方差大，容易选出概率较小、不合常理的词；分布方差小，选出的K个词同质化严重，结果不够丰富</font>
+</li>
+<li>top-P 设定阈值 p 来对候选集进行选取，也就是针对候选词的概率选择保留。好处是可以避免选出特别离谱的词，还能保留住更多概率相近的词，增加丰富度(<em>但如果候选词分布方差特别小，同质化的问题还是存在？只不过能确保候选集里不会都是含义相近的词</em>)</li>
+<li>temperature 机制(温度) 对softmax函数中的自变量做尺度变换，实现调节随机性。即引入一个变量T，使得当 T &gt; 1 时，Temperature 机制会使得候选集中的词的概率差距减小，分布变得更平坦，从而增加随机性；当 0 &lt; T &lt; 1 时，Temperature 机制会使得候选集中的元素的概率差距加大，强者越强，弱者越弱，概率高的候选词会容易被选到，从而随机性变弱(<font color="#CD2626">想要开放性结果，将T设置的大于1；想要保守的、弱随机的结果，比如代码生成，将T设置的 0~1)</font>)</li>
+</ul>
+<h1 id="6-检索增强生成rag">6 检索增强生成(RAG)</h1>
+<p><a href="/assets/img/attachments/Pasted%20image%2020250529095351.png" class="popup img-link shimmer"><img src="/assets/img/attachments/Pasted%20image%2020250529095351.png" alt="img" loading="lazy"></a> 给定一个自然语言问题(Query)，检索器将问题进行编码，并从知识库(<em>如维基百科</em>)中高效检索出与问题相关的文档。然后，将检索到的知识和原始问题一并传递给大语言模型， 大语言模型根据检索到的知识和原始问题生成最终的输出。核心优势在于不需要对大语言模型的内部知识进行更新，便可改善大语言模型的幻觉现象，提高生成质量。</p>
+<font color="#CD2626">如何优化设计RAG系统?</font><blockquote><ol>
+<li>如何优化检索器与大语言模型的协作? a. 黑盒增强架构 b. 白盒增强架构</li>
+<li>如何优化检索过程? a. 知识库构建 b. 查询增强 c. 检索器 d. 检索效率增强 e. 重排优化</li>
+<li>如何优化增强过程? a. 何时增强 b. 何处增强 c. 多次增强 d. 降本增效</li>
+</ol></blockquote>
+<h2 id="62-rag-架构分类">
+<span class="me-2">6.2 RAG 架构分类</span><a href="#62-rag-%E6%9E%B6%E6%9E%84%E5%88%86%E7%B1%BB" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p>检索增强生成(RAG)系统是一个集成了外部知识库、检索器、生成器等多个功能模块的软件系统。检索器和生成器的协作方式对 RAG 性能的影响最为显著。 <a href="/assets/img/attachments/Pasted%20image%2020250605161857.png" class="popup img-link shimmer"><img src="/assets/img/attachments/Pasted%20image%2020250605161857.png" alt="img" loading="lazy"></a> 如果大模型是闭源的，那就只能利用它的输出结果，无法调整其参数，所以是“黑盒”；如果大模型是开源的，那就可以对其微调，也就相当于“白盒”。</p>
+<h3 id="one-无微调">
+<span class="me-2"><img class="emoji" title=":one:" alt=":one:" raw="1️⃣" src="https://github.githubassets.com/images/icons/emoji/unicode/0031-20e3.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">无微调</span><a href="#one-%E6%97%A0%E5%BE%AE%E8%B0%83" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>【典型】In-Context RALM 检索器和语言模型训练后就不再更新，在输入的问题或部分句子作为查询从知识库中检索出相关文档，在生成阶段，直接把这些检索到的文档拼接到prompt上下文里。一个 RAG 任务可能涉及多次执行检索和生成。例如，在一个长文本生成任务中，<font color="#CD2626">每生成一定量的文本后，模型就可能会执行一次检索</font>，以确保随着话题的发展，后续生成的内容能够持续保持与话题相关。</p>
+<blockquote><p>❗️ 检索步长 【含义】模型在生成文本时，每隔多少个词进行一次检索。 【影响】直接影响到模型的响应速度和信息的即时性。较短的检索步长能够提供更为及 时的信息更新 ❗️ 检索查询长度 【含义】用于检索的文本片段的长度 【影响】通常被设置为语言模型输入中的最后几个词，以确保检索到的 信息与当前的文本生成任务高度相关</p></blockquote>
+<h3 id="two-检索器微调">
+<span class="me-2"><img class="emoji" title=":two:" alt=":two:" raw="2️⃣" src="https://github.githubassets.com/images/icons/emoji/unicode/0032-20e3.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">检索器微调</span><a href="#two-%E6%A3%80%E7%B4%A2%E5%99%A8%E5%BE%AE%E8%B0%83" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>【典型】REPLUG LSR 用大模型的输出指导检索器的微调。用大语言模型的困惑度分数作为监督信号来微调检索器，使其能更有效地检索出能够显著降低语言模型困惑度的文档。</p>
+<blockquote>
+<p>两个关键的概率分布， ❗️ 检索器输出的文档分布。通过余弦相似度衡量检索得到的文档与上下文的相似度，进而转换成概率值 ❗️ 文档对语言模型的贡献分布。语言模型对原始上下文和每一个检索到的文档生成预测，所有输出结果形成一个概率分布</p>
+<p>训练(微调)的方式就是基于以上两个概率分布，力图最小化KL 散度损失函数。</p>
+</blockquote>
+<blockquote class="prompt-tip"><p>其实就是确保检索器输出的文档相关性分布与文档对语言模型的贡献分布相一致</p></blockquote>
+<h3 id="three-仅微调语言模型">
+<span class="me-2"><img class="emoji" title=":three:" alt=":three:" raw="3️⃣" src="https://github.githubassets.com/images/icons/emoji/unicode/0033-20e3.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">仅微调语言模型</span><a href="#three-%E4%BB%85%E5%BE%AE%E8%B0%83%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>【典型】RETRO 大语言模型根据检索器提供的上下文信息，对自身参数进行微调。 以RETRO为例： 将知识库中的文本切块 =&gt; 对每个文本块生成嵌入向量 =&gt; (微调模型时)每当模型生成一段文本块后，就去知识库中检索出与之最相似的嵌入向量 =&gt; 嵌入向量和模型注意力层的输出一起被外部的 Transformer 编码器编码 =&gt; 新的编码向量直接输入给模型的块交叉编码器的键(key)和值(value)，以捕捉外部知识的关键信息</p>
+<h3 id="four-检索器和语言模型协同微调">
+<span class="me-2"><img class="emoji" title=":four:" alt=":four:" raw="4️⃣" src="https://github.githubassets.com/images/icons/emoji/unicode/0034-20e3.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">检索器和语言模型协同微调</span><a href="#four-%E6%A3%80%E7%B4%A2%E5%99%A8%E5%92%8C%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E5%8D%8F%E5%90%8C%E5%BE%AE%E8%B0%83" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>【典型】Atlas 检索器 和语言模型的参数更新同步进行。 以Atlas为例：在预训练和微调阶段使用 KL 散度损失函数来联合训练检索器和语言模型，检索器和语言模型参数同步被更新，检索器学习向语言模型提供最相关的文档，而语言模型则学习如何利用这些文档来改善其对查询的响应</p>
+<h2 id="63-知识检索">
+<span class="me-2">6.3 知识检索</span><a href="#63-%E7%9F%A5%E8%AF%86%E6%A3%80%E7%B4%A2" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<h3 id="-数据采集及预处理">
+<span class="me-2">📖 数据采集及预处理</span><a href="#-%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86%E5%8F%8A%E9%A2%84%E5%A4%84%E7%90%86" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>文本分块 是将长文本分割成较小文本块的过程。文本分块的具体实施流程通常开始于将长文本拆解为较小的语义单元，如句子或段落。随后，这些单元被逐步组合成更大的块，直到达到预设的块大小，构建出独立的文本片段。为了保持语义连贯性，通常还会在相邻的文本片段之间设置一定的重叠区域。</p>
+<h3 id="-知识库增强">
+<span class="me-2">📖 知识库增强</span><a href="#-%E7%9F%A5%E8%AF%86%E5%BA%93%E5%A2%9E%E5%BC%BA" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>【查询生成】利用大语言模型生成与文档内容紧密相关的<strong>伪查询</strong>，用户真实的查询将与这些伪查询匹配。</p>
+<blockquote class="prompt-tip"><p>和 FAQ WIKI 的作用类似，进入文档后从目录里寻找和自己问题最接近的 Q</p></blockquote>
+<p>【标题生成】利用大语言模型为没有标题的文档生成标题</p>
+<h3 id="-查询增强">
+<span class="me-2">📖 查询增强</span><a href="#-%E6%9F%A5%E8%AF%A2%E5%A2%9E%E5%BC%BA" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>对用户查询的语义和内容进行扩展 【同义词改写】原始查询改写成不同表达方式，分别去检索文档，然后把结果合并去重 【多视角分解】针对一个复杂(或抽象、泛泛)的问题，分解成多个不同视角的具体问题，分别进行检索 【查询内容增强】生成与原始查询相关的上下文信息，来丰富查询内容，比如生成查询的背景信息(<em>多视角分解的一种特殊形式？</em>)</p>
+<h3 id="-检索器">
+<span class="me-2">📖 检索器</span><a href="#-%E6%A3%80%E7%B4%A2%E5%99%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>【判别式检索器】 通过判别模型对查询和文档是否相关打分。<img class="emoji" title=":one:" alt=":one:" raw="1️⃣" src="https://github.githubassets.com/images/icons/emoji/unicode/0031-20e3.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">稀疏检索器 【典型】TF-IDF、BM25 统计文档中特定词项出现的统计特征来对文档进行编码，然后基于此编码计算查询与知识库中的文档的相似度来进行检索<img class="emoji" title=":two:" alt=":two:" raw="2️⃣" src="https://github.githubassets.com/images/icons/emoji/unicode/0032-20e3.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">稠密检索器 用预训练语言模型对文本生成低维、密集的向量表示，通 过计算向量间的相似度进行检索</p>
+<ul>
+<li>交叉编码类 将查询和文档拼接在一起，随后利用预训练语言模型作为编码器生成一个向量表示，再通过一个分类器处理这个向量，最终输出一个介于 0 和 1 之间的数值，表示输入的查询和文档之间的相似程度。📌 计算量大，不适合大规模检索阶段，适用于对少量候选文档进行更精确排序的阶段</li>
+<li>双编码器类 查询和文档首先各自通过独立的编码器生成各自的向量表示，再对这两个向量之间的相似度进行计算，以评估它们的相关性 📌 可以预先离线计算并存储所有文档的向量表示，在线检索时则可直接进行向量匹配，匹配效率高，但匹配精确度有影响 【生成式检索器】 利用生成模型，生成式检索器直接将知识 库中的文档信息记忆在模型参数中，直接把输入的查询生成文档的标识符。需要训练专用的模型</li>
+</ul>
+<h3 id="-检索效率增强">
+<span class="me-2">📖 检索效率增强</span><a href="#-%E6%A3%80%E7%B4%A2%E6%95%88%E7%8E%87%E5%A2%9E%E5%BC%BA" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>通过向量数据库来实现检索中的高效向量存储和查询，向量数据库的核心是设计高效的相似度索引算法</p>
+<h4 id="one-基于空间划分">
+<span class="me-2"><img class="emoji" title=":one:" alt=":one:" raw="1️⃣" src="https://github.githubassets.com/images/icons/emoji/unicode/0031-20e3.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">基于空间划分</span><a href="#one-%E5%9F%BA%E4%BA%8E%E7%A9%BA%E9%97%B4%E5%88%92%E5%88%86" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>将搜索空间划分为多个区域来实现索引</p>
+<ul>
+<li>基于树 通过一系列规则递归地划分空间，形成一种树状结构，每个叶节点代表一个较小区域，区域内的数据点彼此接近。在查询时，算法从树的根节点出发，逐步深入到合适的叶节点，最后在叶节点内部进行数据点的相似度比较，以找到最近的向量</li>
+<li>基于哈希 通过哈希函数将向量映射到哈希表的不同桶中，使得相似向量通常位于同一桶内<h4 id="two-基于乘积量化">
+<span class="me-2"><img class="emoji" title=":two:" alt=":two:" raw="2️⃣" src="https://github.githubassets.com/images/icons/emoji/unicode/0032-20e3.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">基于乘积量化</span><a href="#two-%E5%9F%BA%E4%BA%8E%E4%B9%98%E7%A7%AF%E9%87%8F%E5%8C%96" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>将高维向量空间划分为多个子空间，并在每个子空间中进行聚类得到码本和码字，以此作为构建索引的基础</p>
+<h4 id="three-基于图">
+<span class="me-2"><img class="emoji" title=":three:" alt=":three:" raw="3️⃣" src="https://github.githubassets.com/images/icons/emoji/unicode/0033-20e3.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">基于图</span><a href="#three-%E5%9F%BA%E4%BA%8E%E5%9B%BE" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>📌 邻近图。在索引构建阶段，将数据集中的每个向量表示为图中的一个节点，并根据向量间的距离或相似性建立边的连接。不同的图索引结构主要体现在其独特的赋边策略上。</p>
+</li>
+</ul>
+<h3 id="-检索结果重排">
+<span class="me-2">📖 检索结果重排</span><a href="#-%E6%A3%80%E7%B4%A2%E7%BB%93%E6%9E%9C%E9%87%8D%E6%8E%92" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>对检索到的文档进行重新排序</p>
+<h4 id="one-基于交叉编码">
+<span class="me-2"><img class="emoji" title=":one:" alt=":one:" raw="1️⃣" src="https://github.githubassets.com/images/icons/emoji/unicode/0031-20e3.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">基于交叉编码</span><a href="#one-%E5%9F%BA%E4%BA%8E%E4%BA%A4%E5%8F%89%E7%BC%96%E7%A0%81" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>【典型】MiniLM-L 利用交叉编码器(Cross-Encoders)来评估文档与查询之间的语义相关性 <a href="https://huggingface.co/spaces/mteb/leaderboard">MTEB排行榜（for 重排模型）</a></p>
+<h4 id="two-基于上下文学习">
+<span class="me-2"><img class="emoji" title=":two:" alt=":two:" raw="2️⃣" src="https://github.githubassets.com/images/icons/emoji/unicode/0032-20e3.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">基于上下文学习</span><a href="#two-%E5%9F%BA%E4%BA%8E%E4%B8%8A%E4%B8%8B%E6%96%87%E5%AD%A6%E4%B9%A0" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>【典型】RankGPT <a href="/assets/img/attachments/Pasted%20image%2020250611110335.png" class="popup img-link shimmer"><img src="/assets/img/attachments/Pasted%20image%2020250611110335.png" alt="img" loading="lazy"></a> 通过设计精巧的 Prompt，使用大语言模型来执行重排任务</p>
+<h2 id="64-生成增强">
+<span class="me-2">6.4 生成增强</span><a href="#64-%E7%94%9F%E6%88%90%E5%A2%9E%E5%BC%BA" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<h3 id="何时增强">
+<span class="me-2">❓何时增强</span><a href="#%E4%BD%95%E6%97%B6%E5%A2%9E%E5%BC%BA" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>关键：<strong>判断大语言模型是否具有内部知识</strong>。</p>
+<h4 id="one-外部观测法">
+<span class="me-2"><img class="emoji" title=":one:" alt=":one:" raw="1️⃣" src="https://github.githubassets.com/images/icons/emoji/unicode/0031-20e3.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">外部观测法</span><a href="#one-%E5%A4%96%E9%83%A8%E8%A7%82%E6%B5%8B%E6%B3%95" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>通过 Prompt 直接询问模型是否具备内部知识，或应用统计方法对是否具备内部知识进行估计</p>
+<ul>
+<li>询问 直接询问和反复询问。让模型重复多次回答同一个问题，看结果是否每次都正确、相似。但可能模型会持续给错误答案导致误判</li>
+<li>观察训练数据 看模型的训练数据里是否包含目标知识。但一是很多模型不开源、二是数据量太大了</li>
+<li>构造伪训练数据统计量 模型都是基于现有数据训练的，因此认为可获取的数据中，某个实体约“流行”，模型训练的时候训练数据中包含该实体的数据也越多，对实体的“记忆”就越深。<font color="#CD2626">其实就是虽然不知道闭源模型究竟用了哪些训练数据，但网上特别常见、流行的数据一定是在训练集里的，偏门、冷门的数据训练模型时也同样会难以获取，相应的模型掌握程度的也受限</font><h4 id="two-内部观测法">
+<span class="me-2"><img class="emoji" title=":two:" alt=":two:" raw="2️⃣" src="https://github.githubassets.com/images/icons/emoji/unicode/0032-20e3.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">内部观测法</span><a href="#two-%E5%86%85%E9%83%A8%E8%A7%82%E6%B5%8B%E6%B3%95" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>通过检测模型内部神经元的状态信息来判断模型是否存在内部知识，这种方法需要对模型参数进行侵入式的探测。 分析模型在生成时每一层的隐藏状态变化，如果模型表现出较高的内部不确定性，如注意力分布较为分散、激活值变化较大等，就可能对当前上下文缺乏充分的理解，从而无法做出有把握的预测。 模型的内部知识检索主要发生在中间层的前馈网络中，可以训练分类器进行判别中间层展现出的不同的动态变化，这种方法被称为<font color="#CD2626">探针</font>。</p>
+</li>
+</ul>
+<h3 id="何处增强">
+<span class="me-2">❓何处增强</span><a href="#%E4%BD%95%E5%A4%84%E5%A2%9E%E5%BC%BA" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p><a href="/assets/img/attachments/Pasted%20image%2020250611191949.png" class="popup img-link shimmer"><img src="/assets/img/attachments/Pasted%20image%2020250611191949.png" alt="img" loading="lazy"></a></p>
+<h4 id="one-输入端">
+<span class="me-2"><img class="emoji" title=":one:" alt=":one:" raw="1️⃣" src="https://github.githubassets.com/images/icons/emoji/unicode/0031-20e3.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">输入端</span><a href="#one-%E8%BE%93%E5%85%A5%E7%AB%AF" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>直接将检索到的外部知识文本与用户查询拼接到 Prompt 中。此方式的重点在于Prompt 设计以及检索到的外部知识的排序。</p>
+<h4 id="two-中间层">
+<span class="me-2"><img class="emoji" title=":two:" alt=":two:" raw="2️⃣" src="https://github.githubassets.com/images/icons/emoji/unicode/0032-20e3.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">中间层</span><a href="#two-%E4%B8%AD%E9%97%B4%E5%B1%82" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>将检索到的外部知识转换为向量表示，插入通过交叉注意力融合到模型的隐藏状态中</p>
+<h4 id="three-输出端">
+<span class="me-2"><img class="emoji" title=":three:" alt=":three:" raw="3️⃣" src="https://github.githubassets.com/images/icons/emoji/unicode/0033-20e3.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">输出端</span><a href="#three-%E8%BE%93%E5%87%BA%E7%AB%AF" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>利用检索到的外部知识对大语言模型生成的文本进行校准。(<em>回到了专家模式、知识库模式？</em>)</p>
+<h3 id="多次增强">
+<span class="me-2">❓多次增强</span><a href="#%E5%A4%9A%E6%AC%A1%E5%A2%9E%E5%BC%BA" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>复杂或模糊的问题需要多次检索增强。</p>
+<h4 id="one-分解式增强">
+<span class="me-2"><img class="emoji" title=":one:" alt=":one:" raw="1️⃣" src="https://github.githubassets.com/images/icons/emoji/unicode/0031-20e3.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">分解式增强</span><a href="#one-%E5%88%86%E8%A7%A3%E5%BC%8F%E5%A2%9E%E5%BC%BA" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>🎯 复杂问题 【典型】DEMONSTRATE–SEARCH–PREDICT(DSP) <a href="/assets/img/attachments/Pasted%20image%2020250611200017.png" class="popup img-link shimmer"><img src="/assets/img/attachments/Pasted%20image%2020250611200017.png" alt="img" loading="lazy"></a> =&gt; 通过上下文学习的方法，将复杂问题分解为子问题 =&gt; 对子问题 进行迭代检索增强 =&gt; 根据综合外部知识生成最终回答</p>
+<blockquote class="prompt-tip"><p>不同领域的复杂问题可能有着不同的分解范式，因此常需要根据具体任务对问题分解方案进行设计</p></blockquote>
+<h4 id="two-渐进式增强">
+<span class="me-2"><img class="emoji" title=":two:" alt=":two:" raw="2️⃣" src="https://github.githubassets.com/images/icons/emoji/unicode/0032-20e3.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">渐进式增强</span><a href="#two-%E6%B8%90%E8%BF%9B%E5%BC%8F%E5%A2%9E%E5%BC%BA" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>🎯 模糊问题 【典型】TREE OF CLARIFICATIONS(TOC) <a href="/assets/img/attachments/Pasted%20image%2020250611201136.png" class="popup img-link shimmer"><img src="/assets/img/attachments/Pasted%20image%2020250611201136.png" alt="img" loading="lazy"></a> 通过递归式检索来引导大语言模型在树状结构中探索给定模糊问题的多种澄清路径。 根据检索到的相关文档和原始问题，生成一系列具体的细化问题，然后针对每个细化问题，再独立进行检索和进一步细化，这样会形成一颗树，叶子结点就是一个有效答案。</p>
+<blockquote class="prompt-tip"><p>计算量会随问题复杂度指数级增长</p></blockquote>
+<h3 id="️-降本增效">
+<span class="me-2">⛔️ 降本增效</span><a href="#%EF%B8%8F-%E9%99%8D%E6%9C%AC%E5%A2%9E%E6%95%88" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<h4 id="one-去除冗余文本">
+<span class="me-2"><img class="emoji" title=":one:" alt=":one:" raw="1️⃣" src="https://github.githubassets.com/images/icons/emoji/unicode/0031-20e3.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">去除冗余文本</span><a href="#one-%E5%8E%BB%E9%99%A4%E5%86%97%E4%BD%99%E6%96%87%E6%9C%AC" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>对检索出的原始文本的词句进行过滤，选择出部分有益于增强生成的部分。</p>
+<ul>
+<li>Token级（<em>如 LongLLMLingua</em>） 困惑度低的token，携带的新信息少，模型高概率会预测到，属于冗余。</li>
+<li>子文本级（<em>如 Fit-RAG</em>） 对子文本进行打分，对不必要的子文本成片删除</li>
+<li>全文本级（<em>如 PRCA</em>） 直接从整个文档中抽取出重要信息，以去除掉冗余信息<h4 id="two-复用计算结果">
+<span class="me-2"><img class="emoji" title=":two:" alt=":two:" raw="2️⃣" src="https://github.githubassets.com/images/icons/emoji/unicode/0032-20e3.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">复用计算结果</span><a href="#two-%E5%A4%8D%E7%94%A8%E8%AE%A1%E7%AE%97%E7%BB%93%E6%9E%9C" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>张量缓存。 【典型】RAGCache</p>
+</li>
+</ul>
+</div>
+<div class="post-tail-wrapper text-muted">
+<div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw me-1"></i> <a href="/categories/note/">Note</a>
+</div>
+<div class="post-tags"> <i class="fa fa-tags fa-fw me-1"></i> <a href="/tags/ai/" class="post-tag no-text-decoration">AI</a> <a href="/tags/note/" class="post-tag no-text-decoration">note</a>
+</div>
+<div class=" post-tail-bottom d-flex justify-content-between align-items-center mt-5 pb-2 ">
+<div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div>
+<div class="share-wrapper d-flex align-items-center"> <span class="share-label text-muted">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=%E3%80%8A%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%2024601&url=https%3A%2F%2Flinbonanlibra.github.io%2Fposts%2F%25E5%25A4%25A7%25E6%25A8%25A1%25E5%259E%258B%25E5%259F%25BA%25E7%25A1%2580-%25E7%25AC%2594%25E8%25AE%25B0%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter" aria-label="Twitter"> <i class="fa-fw fa-brands fa-square-x-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=%E3%80%8A%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%2024601&u=https%3A%2F%2Flinbonanlibra.github.io%2Fposts%2F%25E5%25A4%25A7%25E6%25A8%25A1%25E5%259E%258B%25E5%259F%25BA%25E7%25A1%2580-%25E7%25AC%2594%25E8%25AE%25B0%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=https%3A%2F%2Flinbonanlibra.github.io%2Fposts%2F%25E5%25A4%25A7%25E6%25A8%25A1%25E5%259E%258B%25E5%259F%25BA%25E7%25A1%2580-%25E7%25AC%2594%25E8%25AE%25B0%2F&text=%E3%80%8A%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%2024601" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Telegram" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <button id="copy-link" aria-label="Copy link" class="btn small" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy link" data-title-succeed="Link copied successfully!"> <i class="fa-fw fas fa-link pe-none fs-6"></i> </button> </span>
+</div>
+</div>
+</div></article></main><aside aria-label="Panel" id="panel-wrapper" class="col-xl-3 ps-2 text-muted"><div class="access">
+<section id="access-lastmod"><h2 class="panel-heading">Recently Updated</h2>
+<ul class="content list-unstyled ps-0 pb-1 ms-1 mt-2">
+<li class="text-truncate lh-lg"> <a href="/posts/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80-%E7%AC%94%E8%AE%B0/">《大模型基础》阅读笔记</a>
+</li>
+<li class="text-truncate lh-lg"> <a href="/posts/%E5%AE%B9%E5%99%A8%E5%86%85%E5%AD%98%E6%8C%81%E7%BB%AD%E5%A2%9E%E9%95%BF/">模型服务器内存持续下降问题排查</a>
+</li>
+<li class="text-truncate lh-lg"> <a href="/posts/text-and-typography/">Text and Typography</a>
+</li>
+</ul></section><section><h2 class="panel-heading">Trending Tags</h2>
+<div class="d-flex flex-wrap mt-3 mb-1 me-3"> <a class="post-tag btn btn-outline-primary" href="/tags/note/">note</a> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">AI</a> <a class="post-tag btn btn-outline-primary" href="/tags/memory/">Memory</a> <a class="post-tag btn btn-outline-primary" href="/tags/typography/">typography</a>
+</div></section>
+</div>
+<div class="toc-border-cover z-3"></div>
+<section id="toc-wrapper" class="invisible position-sticky ps-0 pe-4 pb-4"><h2 class="panel-heading ps-3 pb-2 mb-0">Contents</h2>
+<nav id="toc"></nav></section></aside>
+</div>
+<div class="row"><div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 px-md-4">
+<aside id="related-posts" aria-labelledby="related-label"><h3 class="mb-4" id="related-label">Further Reading</h3>
+<nav class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 mb-4"><article class="col"> <a href="/posts/%E5%AE%B9%E5%99%A8%E5%86%85%E5%AD%98%E6%8C%81%E7%BB%AD%E5%A2%9E%E9%95%BF/" class="post-preview card h-100"><div class="card-body"> <time data-ts="1652349960" data-df="ll"> May 12, 2022 </time><h4 class="pt-0 my-2">模型服务器内存持续下降问题排查</h4>
+<div class="text-muted"><p>尝试用 valgrind 分析内存 考虑先尝试定位出 Native 内存到底被什么占用了、是什么申请了内存却没及时释放，最初想用 valgrind 抓一下内存的分配/释放动作，来分析是什么被遗留在了内存里没释放。 但在机器上安装好环境后发现，它要有一个可执行文件才比较便于分析，对于 jvm，它不太好使用。但脱离了jvm，单独把模型加载代码抽出来又感觉不能很好的还原场景。 yum instal...</p></div>
+</div></a></article></nav></aside><nav class="post-navigation d-flex justify-content-between" aria-label="Post Navigation"> <a href="/posts/%E5%AE%B9%E5%99%A8%E5%86%85%E5%AD%98%E6%8C%81%E7%BB%AD%E5%A2%9E%E9%95%BF/" class="btn btn-outline-primary" aria-label="Older"><p>模型服务器内存持续下降问题排查</p></a><div class="btn btn-outline-primary disabled" aria-label="Newer"><p>-</p></div></nav><footer aria-label="Site Info" class=" d-flex flex-column justify-content-center text-muted flex-lg-row justify-content-lg-between align-items-lg-center pb-lg-3 "><p>© <time>2026</time> <a href="https://github.com/linbonanlibra">linbonanlibra</a>. <span data-bs-toggle="tooltip" data-bs-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p>
+<p>Using the <a data-bs-toggle="tooltip" data-bs-placement="top" title="v7.4.1" href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme for <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a>.</p></footer>
+</div></div>
+<div id="search-result-wrapper" class="d-flex justify-content-center d-none"><div class="col-11 content">
+<div id="search-hints"><section><h2 class="panel-heading">Trending Tags</h2>
+<div class="d-flex flex-wrap mt-3 mb-1 me-3"> <a class="post-tag btn btn-outline-primary" href="/tags/note/">note</a> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">AI</a> <a class="post-tag btn btn-outline-primary" href="/tags/memory/">Memory</a> <a class="post-tag btn btn-outline-primary" href="/tags/typography/">typography</a>
+</div></section></div>
+<div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div>
+</div></div>
+</div>
+<aside aria-label="Scroll to Top"> <button id="back-to-top" type="button" class="btn btn-lg btn-box-shadow"> <i class="fas fa-angle-up"></i> </button></aside>
+</div>
+<div id="mask" class="d-none position-fixed w-100 h-100 z-1"></div>
+<aside id="notification" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-animation="true" data-bs-autohide="false"><div class="toast-header"> <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+</div>
+<div class="toast-body text-center pt-0">
+<p class="px-2 mb-3">A new version of content is available.</p>
+<button type="button" class="btn btn-primary" aria-label="Update"> Update </button>
+</div></aside><script> document.addEventListener('DOMContentLoaded', () => { SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<article class="px-1 px-sm-2 px-lg-4 px-xl-0"><header><h2><a href="{url}">{title}</a></h2><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div></header><p>{content}</p></article>', noResultsText: '<p class="mt-5">Oops! No results found.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="me-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); }); </script>
+</body>
+</html>
