@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f7">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, user-scalable=no initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+<meta name="generator" content="Jekyll v4.4.1">
+<meta property="og:title" content="Agent planning">
+<meta property="og:locale" content="en">
+<meta name="description" content="Agent Planning">
+<meta name="twitter:description" property="og:description" content="Agent Planning">
+<link rel="canonical" href="https://linbonanlibra.github.io/posts/Agent-Planning/">
+<meta property="og:url" content="https://linbonanlibra.github.io/posts/Agent-Planning/">
+<meta property="og:site_name" content="24601">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2024-06-26T00:00:00+08:00">
+<meta property="article:modified_time" content="2024-06-26T00:00:00+08:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Agent planning"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-06-26T00:00:00+08:00","datePublished":"2024-06-26T00:00:00+08:00","description":"Agent Planning","headline":"Agent planning","mainEntityOfPage":{"@type":"WebPage","@id":"https://linbonanlibra.github.io/posts/Agent-Planning/"},"url":"https://linbonanlibra.github.io/posts/Agent-Planning/"}</script><title>Agent planning | 24601</title>
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
+<link rel="manifest" href="/assets/img/favicons/site.webmanifest">
+<link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
+<meta name="apple-mobile-web-app-title" content="24601">
+<meta name="application-name" content="24601">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="/assets/css/jekyll-theme-chirpy.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&amp;family=Source+Sans+Pro:wght@400;600;700;900&amp;display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-web/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/loading-attribute-polyfill@2/dist/loading-attribute-polyfill.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3/dist/css/glightbox.min.css"> <script src="/assets/js/dist/theme.min.js"></script> <script defer src="https://cdn.jsdelivr.net/combine/npm/simple-jekyll-search@1/dest/simple-jekyll-search.min.js,npm/loading-attribute-polyfill@2/dist/loading-attribute-polyfill.umd.min.js,npm/glightbox@3/dist/js/glightbox.min.js,npm/clipboard@2/dist/clipboard.min.js,npm/dayjs@1/dayjs.min.js,npm/dayjs@1/locale/en.js,npm/dayjs@1/plugin/relativeTime.js,npm/dayjs@1/plugin/localizedFormat.js,npm/tocbot@4/dist/tocbot.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script defer src="/app.min.js?baseurl=&amp;register=true"></script>
+</head>
+<body>
+<aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column align-items-end"><header class="profile-wrapper"> <a href="/" id="avatar" class="rounded-circle"><img src="/assets/img/avatar/avatar.png" width="112" height="112" alt="avatar" onerror="this.style.display='none'"></a> <a class="site-title d-block" href="/">24601</a><p class="site-subtitle fst-italic mb-0">-- rua rua rua --</p></header><nav class="flex-column flex-grow-1 w-100 ps-0"><ul class="nav">
+<li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home"></i> <span>HOME</span> </a>
+</li>
+<li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream"></i> <span>CATEGORIES</span> </a>
+</li>
+<li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags"></i> <span>TAGS</span> </a>
+</li>
+<li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive"></i> <span>ARCHIVES</span> </a>
+</li>
+<li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle"></i> <span>ABOUT</span> </a>
+</li>
+</ul></nav><div class="sidebar-bottom d-flex flex-wrap align-items-center w-100"> <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle"> <i class="fas fa-adjust"></i> </button> <span class="icon-border"></span> <a href="https://github.com/linbonanlibra" aria-label="github" target="_blank" rel="noopener noreferrer"> <i class="fab fa-github"></i> </a> <a href="javascript:location.href%20=%20'mailto:'%20+%20['929lbn','163.com'].join('@')" aria-label="email"> <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss"> <i class="fas fa-rss"></i> </a>
+</div></aside><div id="main-wrapper" class="d-flex justify-content-center">
+<div class="container d-flex flex-column px-xxl-5">
+<header id="topbar-wrapper" class="flex-shrink-0" aria-label="Top Bar"><div id="topbar" class="d-flex align-items-center justify-content-between px-lg-3 h-100">
+<nav id="breadcrumb" aria-label="Breadcrumb"> <span> <a href="/">Home</a> </span> <span>Agent planning</span></nav><button type="button" id="sidebar-trigger" class="btn btn-link" aria-label="Sidebar"> <i class="fas fa-bars fa-fw"></i> </button><div id="topbar-title"> Post</div>
+<button type="button" id="search-trigger" class="btn btn-link" aria-label="Search"> <i class="fas fa-search fa-fw"></i> </button> <search id="search" class="align-items-center ms-3 ms-lg-0"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> </search> <button type="button" class="btn btn-link text-decoration-none" id="search-cancel">Cancel</button>
+</div></header><div class="row flex-grow-1">
+<main aria-label="Main Content" class="col-12 col-lg-11 col-xl-9 px-md-4"><article class="px-1" data-toc="true"><header><h1 data-toc-skip>Agent planning</h1>
+<div class="post-meta text-muted"> <span> Posted <time data-ts="1719331200" data-df="ll" data-bs-toggle="tooltip" data-bs-placement="bottom"> Jun 26, 2024 </time> </span><div class="d-flex justify-content-between"> <span> By <em> <a href="https://github.com/linbonanlibra">linbonanlibra</a> </em> </span><div> <span class="readtime" data-bs-toggle="tooltip" data-bs-placement="bottom" title="3714 words"> <em>20 min</em> read</span>
+</div>
+</div>
+</div></header><div id="toc-bar" class="d-flex align-items-center justify-content-between invisible"> <span class="label text-truncate">Agent planning</span> <button type="button" class="toc-trigger btn me-1"> <i class="fa-solid fa-list-ul fa-fw"></i> </button>
+</div>
+<button id="toc-solo-trigger" type="button" class="toc-trigger btn btn-outline-secondary btn-sm"> <span class="label ps-2 pe-1">Contents</span> <i class="fa-solid fa-angle-right fa-fw"></i> </button> <dialog id="toc-popup" class="p-0"><div class="header d-flex flex-row align-items-center justify-content-between">
+<div class="label text-truncate py-2 ms-4">Agent planning</div>
+<button id="toc-popup-close" type="button" class="btn-close btn-sm mx-3" aria-label="Close"></button>
+</div>
+<div id="toc-popup-content" class="px-4 py-3 pb-4"></div></dialog><div class="content">
+<h1 id="agent-planning">Agent Planning</h1>
+<blockquote><p>Agent 工程中的规划机制：从思维链到多智能体编排</p></blockquote>
+<hr>
+<h2 id="一什么是-planning">
+<span class="me-2">一、什么是 Planning</span><a href="#%E4%B8%80%E4%BB%80%E4%B9%88%E6%98%AF-planning" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p>Planning（规划）是 Agent 将复杂目标分解为可执行步骤序列的能力。</p>
+<p>没有规划能力的 LLM 是<strong>反应式</strong>的——给一个问题，直接输出一个答案。有规划能力的 Agent 是<strong>前瞻式</strong>的——先思考”要做什么、分几步、每步用什么工具”，再行动。</p>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td>
+<td class="rouge-code"><pre>无规划：
+User → [LLM] → Answer
+
+有规划：
+User → [Plan: step1→step2→step3] → Execute(step1) → Observe → Execute(step2) → ... → Answer
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p><strong>规划解决的核心问题：</strong></p>
+<ul>
+<li>任务太复杂，一步无法完成</li>
+<li>需要按依赖顺序执行（先读文件，才能改文件）</li>
+<li>中途需要根据观察结果调整方向</li>
+<li>需要协调多个工具/子 Agent 并行工作</li>
+</ul>
+<hr>
+<h2 id="二react最基础的规划范式">
+<span class="me-2">二、ReAct：最基础的规划范式</span><a href="#%E4%BA%8Creact%E6%9C%80%E5%9F%BA%E7%A1%80%E7%9A%84%E8%A7%84%E5%88%92%E8%8C%83%E5%BC%8F" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p>ReAct（Reasoning + Acting）是目前使用最广泛的 Agent 规划模式，由 2022 年的论文提出。</p>
+<h3 id="核心循环">
+<span class="me-2">核心循环</span><a href="#%E6%A0%B8%E5%BF%83%E5%BE%AA%E7%8E%AF" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td>
+<td class="rouge-code"><pre>Thought → Action → Observation → Thought → Action → Observation → ... → Final Answer
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p>每一步都由三个元素组成：</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>元素</th>
+<th>含义</th>
+<th>示例</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>Thought</strong></td>
+<td>当前推理/计划</td>
+<td>“我需要先读取 config.json 确认数据库配置”</td>
+</tr>
+<tr>
+<td><strong>Action</strong></td>
+<td>调用工具执行</td>
+<td><code class="language-plaintext highlighter-rouge">read_file("config.json")</code></td>
+</tr>
+<tr>
+<td><strong>Observation</strong></td>
+<td>工具返回的结果</td>
+<td><code class="language-plaintext highlighter-rouge">{"db_host": "localhost", "port": 5432}</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="在-claude-里的体现">
+<span class="me-2">在 Claude 里的体现</span><a href="#%E5%9C%A8-claude-%E9%87%8C%E7%9A%84%E4%BD%93%E7%8E%B0" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>Claude 的 Tool Use 天然实现了 ReAct 循环：</p>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td>
+<td class="rouge-code"><pre>[Thought]      Claude 输出 text block："我先看看项目结构..."
+[Action]       Claude 输出 tool_use block：{name: "bash", input: {command: "find . -name '*.ts'"}}
+[Observation]  用户返回 tool_result block：{content: "src/index.ts\nsrc/api/..."}
+[Thought]      Claude 继续推理下一步...
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<div class="language-typescript highlighter-rouge">
+<div class="code-header"> <span data-label-text="TypeScript"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td>
+<td class="rouge-code"><pre><span class="c1">// ReAct 循环的代码实现</span>
+<span class="k">while </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">messages</span><span class="p">.</span><span class="nf">create</span><span class="p">({</span>
+    <span class="na">model</span><span class="p">:</span> <span class="dl">"</span><span class="s2">claude-opus-4-8</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">max_tokens</span><span class="p">:</span> <span class="mi">16000</span><span class="p">,</span>
+    <span class="nx">tools</span><span class="p">,</span>
+    <span class="nx">messages</span><span class="p">,</span>
+  <span class="p">});</span>
+
+  <span class="c1">// Thought + Final Answer → 结束</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">stop_reason</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">end_turn</span><span class="dl">"</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+
+  <span class="c1">// Action → 执行工具（Observation）→ 继续循环</span>
+  <span class="kd">const</span> <span class="nx">toolResults</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">executeTools</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">content</span><span class="p">);</span>
+  <span class="nx">messages</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span>
+    <span class="p">{</span> <span class="na">role</span><span class="p">:</span> <span class="dl">"</span><span class="s2">assistant</span><span class="dl">"</span><span class="p">,</span> <span class="na">content</span><span class="p">:</span> <span class="nx">response</span><span class="p">.</span><span class="nx">content</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">role</span><span class="p">:</span> <span class="dl">"</span><span class="s2">user</span><span class="dl">"</span><span class="p">,</span> <span class="na">content</span><span class="p">:</span> <span class="nx">toolResults</span> <span class="p">},</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<h3 id="react-的局限">
+<span class="me-2">ReAct 的局限</span><a href="#react-%E7%9A%84%E5%B1%80%E9%99%90" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<ul>
+<li>
+<strong>串行</strong>：每次只能做一件事，等结果，再决定下一步</li>
+<li>
+<strong>短视</strong>：每步只看当前状态，没有全局计划</li>
+<li>
+<strong>无回溯</strong>：走错了不会回头，只能往前修正</li>
+</ul>
+<hr>
+<h2 id="三规划的四个层次">
+<span class="me-2">三、规划的四个层次</span><a href="#%E4%B8%89%E8%A7%84%E5%88%92%E7%9A%84%E5%9B%9B%E4%B8%AA%E5%B1%82%E6%AC%A1" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p>从简单到复杂，Agent 规划有四个递进的层次：</p>
+<h3 id="level-1直接回答无规划">
+<span class="me-2">Level 1：直接回答（无规划）</span><a href="#level-1%E7%9B%B4%E6%8E%A5%E5%9B%9E%E7%AD%94%E6%97%A0%E8%A7%84%E5%88%92" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td>
+<td class="rouge-code"><pre>适用：分类、摘要、单轮问答
+特征：一次 API 调用，直接输出结果
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<h3 id="level-2链式推理cot">
+<span class="me-2">Level 2：链式推理（CoT）</span><a href="#level-2%E9%93%BE%E5%BC%8F%E6%8E%A8%E7%90%86cot" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>让模型在回答前先”想一想”，输出推理过程：</p>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td>
+<td class="rouge-code"><pre>适用：需要多步推导的问题（数学、逻辑、代码分析）
+机制：Extended Thinking / Adaptive Thinking
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<div class="language-typescript highlighter-rouge">
+<div class="code-header"> <span data-label-text="TypeScript"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td>
+<td class="rouge-code"><pre><span class="c1">// Claude 的 Adaptive Thinking = 自动 CoT</span>
+<span class="kd">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">messages</span><span class="p">.</span><span class="nf">create</span><span class="p">({</span>
+  <span class="na">model</span><span class="p">:</span> <span class="dl">"</span><span class="s2">claude-opus-4-8</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">max_tokens</span><span class="p">:</span> <span class="mi">32000</span><span class="p">,</span>
+  <span class="na">thinking</span><span class="p">:</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">adaptive</span><span class="dl">"</span> <span class="p">},</span>     <span class="c1">// 模型自己决定是否思考、思考多久</span>
+  <span class="na">output_config</span><span class="p">:</span> <span class="p">{</span> <span class="na">effort</span><span class="p">:</span> <span class="dl">"</span><span class="s2">high</span><span class="dl">"</span> <span class="p">},</span>
+  <span class="na">messages</span><span class="p">:</span> <span class="p">[{</span> <span class="na">role</span><span class="p">:</span> <span class="dl">"</span><span class="s2">user</span><span class="dl">"</span><span class="p">,</span> <span class="na">content</span><span class="p">:</span> <span class="dl">"</span><span class="s2">分析这段代码的性能问题...</span><span class="dl">"</span> <span class="p">}],</span>
+<span class="p">});</span>
+
+<span class="c1">// response.content 可能包含：</span>
+<span class="c1">// [{ type: "thinking", thinking: "这个循环复杂度是 O(n²)，因为..." }]</span>
+<span class="c1">// [{ type: "text", text: "主要问题在于第 23 行的嵌套循环..." }]</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<h3 id="level-3工具调用循环react">
+<span class="me-2">Level 3：工具调用循环（ReAct）</span><a href="#level-3%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8%E5%BE%AA%E7%8E%AFreact" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>上一节描述的模式，适用于需要与外部世界交互的任务。</p>
+<h3 id="level-4显式规划--执行plan--execute">
+<span class="me-2">Level 4：显式规划 + 执行（Plan &amp; Execute）</span><a href="#level-4%E6%98%BE%E5%BC%8F%E8%A7%84%E5%88%92--%E6%89%A7%E8%A1%8Cplan--execute" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>先生成完整计划，再按计划执行。适用于复杂的长周期任务：</p>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td>
+<td class="rouge-code"><pre>阶段一（规划）：
+  输入：目标 + 可用工具
+  输出：[step1, step2, step3, ...]  ← 完整的执行计划
+
+阶段二（执行）：
+  按顺序执行每个 step
+  每步结束后可选择：继续 / 修正计划 / 提前终止
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<hr>
+<h2 id="四claude-code-的规划机制">
+<span class="me-2">四、Claude Code 的规划机制</span><a href="#%E5%9B%9Bclaude-code-%E7%9A%84%E8%A7%84%E5%88%92%E6%9C%BA%E5%88%B6" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p>Claude Code 实现了一套完整的规划体系，从轻量到重量级：</p>
+<h3 id="41-enterplanmode显式规划模式">
+<span class="me-2">4.1 EnterPlanMode：显式规划模式</span><a href="#41-enterplanmode%E6%98%BE%E5%BC%8F%E8%A7%84%E5%88%92%E6%A8%A1%E5%BC%8F" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>当任务复杂、影响范围大时，Claude Code 会进入规划模式：</p>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+<td class="rouge-code"><pre>用户：帮我重构认证模块
+
+Claude：（调用 EnterPlanMode）
+  1. 探索代码库（只读，不修改）
+  2. 理解现有架构
+  3. 设计实现方案
+  4. 向用户展示计划，等待审批
+  5. 用户确认后，调用 ExitPlanMode，开始实现
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p><strong>触发规划模式的条件：</strong></p>
+<ul>
+<li>新功能实现（影响多个文件）</li>
+<li>有多种有效实现方案</li>
+<li>修改现有行为</li>
+<li>需要架构决策</li>
+<li>需求不清晰，需先探索</li>
+</ul>
+<p><strong>不触发的情况：</strong></p>
+<ul>
+<li>单行修复（typo、明显 bug）</li>
+<li>用户给出了极其详细的具体指令</li>
+<li>纯研究/探索性任务</li>
+</ul>
+<h3 id="42-taskcreate--taskupdate任务追踪">
+<span class="me-2">4.2 TaskCreate / TaskUpdate：任务追踪</span><a href="#42-taskcreate--taskupdate%E4%BB%BB%E5%8A%A1%E8%BF%BD%E8%B8%AA" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>对于多步骤任务，Claude Code 使用显式任务列表追踪进度：</p>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td>
+<td class="rouge-code"><pre>TaskCreate → TaskUpdate(in_progress) → 实际工作 → TaskUpdate(completed)
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td>
+<td class="rouge-code"><pre>任务列表示例：
+[in_progress] 分析现有认证代码
+[pending]     设计新的 JWT 方案
+[pending]     实现 TokenService
+[pending]     更新路由中间件
+[pending]     编写单元测试
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p>这本质上是把<strong>隐式的规划</strong>变成<strong>显式可追踪的状态</strong>，解决了两个问题：</p>
+<ul>
+<li>长任务不会”忘记”剩余步骤</li>
+<li>用户可以实时看到进度</li>
+</ul>
+<h3 id="43-enterworktree隔离执行环境">
+<span class="me-2">4.3 EnterWorktree：隔离执行环境</span><a href="#43-enterworktree%E9%9A%94%E7%A6%BB%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>对于可能破坏现有代码的操作，规划时可以指定在独立 git worktree 中执行：</p>
+<div class="language-bash highlighter-rouge">
+<div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td>
+<td class="rouge-code"><pre><span class="c"># Claude Code 内部：为当前任务创建隔离工作区</span>
+git worktree add .claude/worktrees/feature-branch <span class="nt">-b</span> feature/auth-refactor
+
+<span class="c"># 在这个隔离环境里实验性地修改代码</span>
+<span class="c"># 不影响主工作区，用户可以随时放弃</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<hr>
+<h2 id="五多智能体规划workflow-编排">
+<span class="me-2">五、多智能体规划：Workflow 编排</span><a href="#%E4%BA%94%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E8%A7%84%E5%88%92workflow-%E7%BC%96%E6%8E%92" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p>单 Agent 的规划能力受上下文窗口限制。当任务需要：</p>
+<ul>
+<li>并行处理大量文件</li>
+<li>独立的多视角验证</li>
+<li>超出单个上下文的工作量</li>
+</ul>
+<p>就需要<strong>多智能体规划</strong>——把工作分解给多个 Agent 并行执行。</p>
+<h3 id="51-两种基础并发模式">
+<span class="me-2">5.1 两种基础并发模式</span><a href="#51-%E4%B8%A4%E7%A7%8D%E5%9F%BA%E7%A1%80%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%BC%8F" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p><strong>pipeline（流水线）：</strong> 每个 item 独立穿越所有阶段，无屏障</p>
+<div class="language-javascript highlighter-rouge">
+<div class="code-header"> <span data-label-text="JavaScript"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td>
+<td class="rouge-code"><pre><span class="c1">// 5 个文件，每个独立经历：分析 → 验证 → 修复</span>
+<span class="c1">// 文件A可以在验证，文件B还在分析，文件C已经在修复</span>
+<span class="kd">const</span> <span class="nx">results</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">pipeline</span><span class="p">(</span>
+  <span class="nx">files</span><span class="p">,</span>
+  <span class="nx">file</span> <span class="o">=&gt;</span> <span class="nf">agent</span><span class="p">(</span><span class="s2">`分析 </span><span class="p">${</span><span class="nx">file</span><span class="p">}</span><span class="s2"> 中的安全漏洞`</span><span class="p">,</span> <span class="p">{</span> <span class="na">schema</span><span class="p">:</span> <span class="nx">FINDINGS</span> <span class="p">}),</span>
+  <span class="nx">findings</span> <span class="o">=&gt;</span> <span class="nf">agent</span><span class="p">(</span><span class="s2">`验证这些发现是否真实存在`</span><span class="p">,</span> <span class="p">{</span> <span class="na">schema</span><span class="p">:</span> <span class="nx">VERDICT</span> <span class="p">}),</span>
+  <span class="nx">verdict</span> <span class="o">=&gt;</span> <span class="nx">verdict</span><span class="p">.</span><span class="nx">isReal</span> <span class="p">?</span> <span class="nf">agent</span><span class="p">(</span><span class="s2">`生成修复方案`</span><span class="p">)</span> <span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+<span class="p">);</span>
+<span class="c1">// 总耗时 = 最慢单个文件的全链路时间（而不是所有文件的总和）</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p><strong>parallel（并行）：</strong> 所有任务同时启动，等全部完成再继续（有屏障）</p>
+<div class="language-javascript highlighter-rouge">
+<div class="code-header"> <span data-label-text="JavaScript"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+<td class="rouge-code"><pre><span class="c1">// 需要汇总所有结果再做下一步决策时使用</span>
+<span class="kd">const</span> <span class="nx">allFindings</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">parallel</span><span class="p">(</span>
+  <span class="nx">DIMENSIONS</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="nx">d</span> <span class="o">=&gt;</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nf">agent</span><span class="p">(</span><span class="s2">`从 </span><span class="p">${</span><span class="nx">d</span><span class="p">}</span><span class="s2"> 维度扫描漏洞`</span><span class="p">,</span> <span class="p">{</span> <span class="na">schema</span><span class="p">:</span> <span class="nx">FINDINGS</span> <span class="p">}))</span>
+<span class="p">);</span>
+<span class="c1">// 去重、合并</span>
+<span class="kd">const</span> <span class="nx">dedupedFindings</span> <span class="o">=</span> <span class="nf">dedup</span><span class="p">(</span><span class="nx">allFindings</span><span class="p">.</span><span class="nf">flat</span><span class="p">());</span>
+<span class="c1">// 再统一验证</span>
+<span class="kd">const</span> <span class="nx">verified</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">parallel</span><span class="p">(</span><span class="nx">dedupedFindings</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="nx">f</span> <span class="o">=&gt;</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nf">agent</span><span class="p">(</span><span class="s2">`验证: </span><span class="p">${</span><span class="nx">f</span><span class="p">}</span><span class="s2">`</span><span class="p">)));</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p><strong>关键原则：默认用 pipeline，只有真正需要全部结果才用 parallel（屏障）。</strong></p>
+<h3 id="52-规划--执行的多-agent-范式">
+<span class="me-2">5.2 规划 + 执行的多 Agent 范式</span><a href="#52-%E8%A7%84%E5%88%92--%E6%89%A7%E8%A1%8C%E7%9A%84%E5%A4%9A-agent-%E8%8C%83%E5%BC%8F" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="language-javascript highlighter-rouge">
+<div class="code-header"> <span data-label-text="JavaScript"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+</pre></td>
+<td class="rouge-code"><pre><span class="k">export</span> <span class="kd">const</span> <span class="nx">meta</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">plan-and-execute</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">description</span><span class="p">:</span> <span class="dl">'</span><span class="s1">先规划再并行执行</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">phases</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">规划</span><span class="dl">'</span><span class="p">,</span> <span class="na">detail</span><span class="p">:</span> <span class="dl">'</span><span class="s1">分析任务，生成执行计划</span><span class="dl">'</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">执行</span><span class="dl">'</span><span class="p">,</span> <span class="na">detail</span><span class="p">:</span> <span class="dl">'</span><span class="s1">并行执行每个子任务</span><span class="dl">'</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">汇总</span><span class="dl">'</span><span class="p">,</span> <span class="na">detail</span><span class="p">:</span> <span class="dl">'</span><span class="s1">合并结果，生成报告</span><span class="dl">'</span> <span class="p">},</span>
+  <span class="p">],</span>
+<span class="p">}</span>
+
+<span class="c1">// Phase 1: 规划（单 Agent，全局视野）</span>
+<span class="nf">phase</span><span class="p">(</span><span class="dl">'</span><span class="s1">规划</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">plan</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">agent</span><span class="p">(</span>
+  <span class="s2">`分析这个代码库，生成重构计划。每个子任务应该独立可并行执行。`</span><span class="p">,</span>
+  <span class="p">{</span> <span class="na">schema</span><span class="p">:</span> <span class="nx">PLAN_SCHEMA</span> <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="c1">// Phase 2: 执行（多 Agent 并行，每个负责一个子任务）</span>
+<span class="nf">phase</span><span class="p">(</span><span class="dl">'</span><span class="s1">执行</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">results</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">pipeline</span><span class="p">(</span>
+  <span class="nx">plan</span><span class="p">.</span><span class="nx">subtasks</span><span class="p">,</span>
+  <span class="nx">task</span> <span class="o">=&gt;</span> <span class="nf">agent</span><span class="p">(</span><span class="s2">`执行子任务: </span><span class="p">${</span><span class="nx">task</span><span class="p">.</span><span class="nx">description</span><span class="p">}</span><span class="s2">`</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">label</span><span class="p">:</span> <span class="nx">task</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span>
+    <span class="na">isolation</span><span class="p">:</span> <span class="dl">'</span><span class="s1">worktree</span><span class="dl">'</span><span class="p">,</span>  <span class="c1">// 每个子任务在独立 git worktree 中执行</span>
+  <span class="p">}),</span>
+<span class="p">)</span>
+
+<span class="c1">// Phase 3: 汇总</span>
+<span class="nf">phase</span><span class="p">(</span><span class="dl">'</span><span class="s1">汇总</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">report</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">agent</span><span class="p">(</span><span class="s2">`合并以下执行结果，生成总结报告: </span><span class="p">${</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">(</span><span class="nx">results</span><span class="p">)}</span><span class="s2">`</span><span class="p">)</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<h3 id="53-对抗性验证adversarial-verify">
+<span class="me-2">5.3 对抗性验证（Adversarial Verify）</span><a href="#53-%E5%AF%B9%E6%8A%97%E6%80%A7%E9%AA%8C%E8%AF%81adversarial-verify" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>规划中的一个重要模式——让多个 Agent 从不同角度质疑同一个发现：</p>
+<div class="language-javascript highlighter-rouge">
+<div class="code-header"> <span data-label-text="JavaScript"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td>
+<td class="rouge-code"><pre><span class="c1">// 找到一个 bug 后，让 3 个独立 Agent 尝试反驳它</span>
+<span class="kd">const</span> <span class="nx">votes</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">parallel</span><span class="p">(</span>
+  <span class="nb">Array</span><span class="p">.</span><span class="k">from</span><span class="p">({</span> <span class="na">length</span><span class="p">:</span> <span class="mi">3</span> <span class="p">},</span> <span class="p">(</span><span class="nx">_</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">()</span> <span class="o">=&gt;</span>
+    <span class="nf">agent</span><span class="p">(</span><span class="s2">`尝试反驳这个 bug：</span><span class="p">${</span><span class="nx">bug</span><span class="p">.</span><span class="nx">description</span><span class="p">}</span><span class="s2">
+           如果不确定，默认返回 refuted=true。
+           视角</span><span class="p">${</span><span class="nx">i</span><span class="p">}</span><span class="s2">: </span><span class="p">${[</span><span class="dl">'</span><span class="s1">安全角度</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">性能角度</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">逻辑角度</span><span class="dl">'</span><span class="p">][</span><span class="nx">i</span><span class="p">]}</span><span class="s2">`</span><span class="p">,</span>
+      <span class="p">{</span> <span class="na">schema</span><span class="p">:</span> <span class="nx">VERDICT_SCHEMA</span> <span class="p">}</span>
+    <span class="p">)</span>
+  <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1">// 只有超过半数认为真实存在，才保留</span>
+<span class="kd">const</span> <span class="nx">isReal</span> <span class="o">=</span> <span class="nx">votes</span><span class="p">.</span><span class="nf">filter</span><span class="p">(</span><span class="nx">v</span> <span class="o">=&gt;</span> <span class="o">!</span><span class="nx">v</span><span class="p">.</span><span class="nx">refuted</span><span class="p">).</span><span class="nx">length</span> <span class="o">&gt;=</span> <span class="mi">2</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<hr>
+<h2 id="六规划的核心权衡">
+<span class="me-2">六、规划的核心权衡</span><a href="#%E5%85%AD%E8%A7%84%E5%88%92%E7%9A%84%E6%A0%B8%E5%BF%83%E6%9D%83%E8%A1%A1" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<h3 id="规划深度-vs-执行成本">
+<span class="me-2">规划深度 vs 执行成本</span><a href="#%E8%A7%84%E5%88%92%E6%B7%B1%E5%BA%A6-vs-%E6%89%A7%E8%A1%8C%E6%88%90%E6%9C%AC" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td>
+<td class="rouge-code"><pre>浅规划（ReAct）：
+  + 低延迟，边走边看
+  + 适应性强，能根据中途发现调整
+  - 可能走弯路
+  - 无法并行
+
+深规划（Plan &amp; Execute）：
+  + 可并行执行子任务
+  + 全局最优路径
+  - 规划本身有成本
+  - 计划可能因中途发现而过时
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p><strong>选择原则：</strong></p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>场景</th>
+<th>推荐策略</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>目标明确、步骤清晰</td>
+<td>Plan &amp; Execute + 并行</td>
+</tr>
+<tr>
+<td>需要探索、未知因素多</td>
+<td>ReAct（边做边看）</td>
+</tr>
+<tr>
+<td>简单任务</td>
+<td>直接回答，无需规划</td>
+</tr>
+<tr>
+<td>需要验证正确性</td>
+<td>Plan &amp; Execute + 对抗验证</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="什么时候需要规划-agent">
+<span class="me-2">什么时候需要规划 Agent</span><a href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E9%9C%80%E8%A6%81%E8%A7%84%E5%88%92-agent" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>满足以下条件才值得用 Agent 规划，否则保持简单：</p>
+<ol>
+<li>
+<strong>复杂性</strong>：任务多步骤，难以事先完全描述</li>
+<li>
+<strong>价值</strong>：结果质量值得更高的成本和延迟</li>
+<li>
+<strong>可行性</strong>：模型在这类任务上有能力</li>
+<li>
+<strong>可恢复性</strong>：错误可被发现和纠正（有测试、有 Review、可回滚）</li>
+</ol>
+<hr>
+<h2 id="七claude-的-adaptive-thinking-与规划的关系">
+<span class="me-2">七、Claude 的 Adaptive Thinking 与规划的关系</span><a href="#%E4%B8%83claude-%E7%9A%84-adaptive-thinking-%E4%B8%8E%E8%A7%84%E5%88%92%E7%9A%84%E5%85%B3%E7%B3%BB" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p>Claude 的 Adaptive Thinking（自适应思考）是<strong>模型内置的规划机制</strong>——在生成最终答案前，模型在一个独立的”思考”空间里进行推演。</p>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td>
+<td class="rouge-code"><pre>用户看到的：
+  [最终回答]
+
+模型实际做的：
+  [thinking block（用户默认看不到）]
+    "这道题需要先...
+     如果用方法A，那么...
+     但方法A有个问题...
+     换方法B，步骤是：1. 2. 3.
+     验证：..."
+  [text block]
+    "这道题的解法是..."
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p><strong>Adaptive Thinking 的特点：</strong></p>
+<ul>
+<li>
+<code class="language-plaintext highlighter-rouge">thinking: { type: "adaptive" }</code> — 模型自己决定是否思考、思考多久</li>
+<li>与 <code class="language-plaintext highlighter-rouge">effort</code> 配合：effort 越高，思考越深</li>
+<li>思考内容默认不返回给用户（<code class="language-plaintext highlighter-rouge">display: "omitted"</code>）</li>
+<li>设置 <code class="language-plaintext highlighter-rouge">display: "summarized"</code> 可以看到摘要版思考内容</li>
+</ul>
+<div class="language-typescript highlighter-rouge">
+<div class="code-header"> <span data-label-text="TypeScript"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td>
+<td class="rouge-code"><pre><span class="c1">// 开启 Adaptive Thinking，让 Claude 充分规划后再回答</span>
+<span class="kd">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">messages</span><span class="p">.</span><span class="nf">create</span><span class="p">({</span>
+  <span class="na">model</span><span class="p">:</span> <span class="dl">"</span><span class="s2">claude-opus-4-8</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">max_tokens</span><span class="p">:</span> <span class="mi">32000</span><span class="p">,</span>
+  <span class="na">thinking</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">adaptive</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">display</span><span class="p">:</span> <span class="dl">"</span><span class="s2">summarized</span><span class="dl">"</span><span class="p">,</span>  <span class="c1">// 可选：返回思考摘要</span>
+  <span class="p">},</span>
+  <span class="na">output_config</span><span class="p">:</span> <span class="p">{</span> <span class="na">effort</span><span class="p">:</span> <span class="dl">"</span><span class="s2">xhigh</span><span class="dl">"</span> <span class="p">},</span>  <span class="c1">// 复杂任务用 xhigh</span>
+  <span class="na">messages</span><span class="p">:</span> <span class="p">[{</span> <span class="na">role</span><span class="p">:</span> <span class="dl">"</span><span class="s2">user</span><span class="dl">"</span><span class="p">,</span> <span class="na">content</span><span class="p">:</span> <span class="dl">"</span><span class="s2">设计一个分布式限流系统...</span><span class="dl">"</span> <span class="p">}],</span>
+<span class="p">});</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p><strong>Adaptive Thinking vs 显式 Tool Use 规划的区别：</strong></p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>维度</th>
+<th>Adaptive Thinking</th>
+<th>Tool Use 规划</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>位置</td>
+<td>模型内部</td>
+<td>外部可观察</td>
+</tr>
+<tr>
+<td>与环境交互</td>
+<td>不能（纯推理）</td>
+<td>能（调用工具）</td>
+</tr>
+<tr>
+<td>适用</td>
+<td>推理密集型任务</td>
+<td>需要外部信息的任务</td>
+</tr>
+<tr>
+<td>用户可见性</td>
+<td>默认不可见</td>
+<td>完全可见</td>
+</tr>
+<tr>
+<td>成本</td>
+<td>增加 output token</td>
+<td>增加 API 调用次数</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="八task-budget控制-agent-的规划深度">
+<span class="me-2">八、Task Budget：控制 Agent 的规划深度</span><a href="#%E5%85%ABtask-budget%E6%8E%A7%E5%88%B6-agent-%E7%9A%84%E8%A7%84%E5%88%92%E6%B7%B1%E5%BA%A6" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p>对于长周期 Agent，规划可能无限延伸，导致 token 失控。<strong>Task Budget</strong> 是告诉模型”你总共有 N 个 token 来完成整个任务”的机制：</p>
+<div class="language-typescript highlighter-rouge">
+<div class="code-header"> <span data-label-text="TypeScript"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td>
+<td class="rouge-code"><pre><span class="c1">// 模型看到一个倒计时，会自我调节规划深度</span>
+<span class="kd">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">beta</span><span class="p">.</span><span class="nx">messages</span><span class="p">.</span><span class="nf">create</span><span class="p">({</span>
+  <span class="na">betas</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">task-budgets-2026-03-13</span><span class="dl">"</span><span class="p">],</span>
+  <span class="na">model</span><span class="p">:</span> <span class="dl">"</span><span class="s2">claude-opus-4-8</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">max_tokens</span><span class="p">:</span> <span class="mi">64000</span><span class="p">,</span>        <span class="c1">// 每次响应的硬上限（模型不感知）</span>
+  <span class="na">thinking</span><span class="p">:</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">adaptive</span><span class="dl">"</span> <span class="p">},</span>
+  <span class="na">output_config</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">effort</span><span class="p">:</span> <span class="dl">"</span><span class="s2">high</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">task_budget</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">tokens</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">total</span><span class="p">:</span> <span class="mi">200000</span><span class="p">,</span>        <span class="c1">// 整个任务的 token 预算（模型感知并自我调节）</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+  <span class="na">messages</span><span class="p">:</span> <span class="p">[...],</span>
+<span class="p">});</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p><strong><code class="language-plaintext highlighter-rouge">max_tokens</code> vs <code class="language-plaintext highlighter-rouge">task_budget</code> 的区别：</strong></p>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td>
+<td class="rouge-code"><pre>max_tokens：硬限制，模型不知道，超出直接截断
+task_budget：软提示，模型知道剩余预算，主动调整规划粒度
+             预算充足时 → 深度探索
+             预算紧张时 → 快速收敛，聚焦核心
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<hr>
+<h2 id="九规划失败的常见原因">
+<span class="me-2">九、规划失败的常见原因</span><a href="#%E4%B9%9D%E8%A7%84%E5%88%92%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%B8%B8%E8%A7%81%E5%8E%9F%E5%9B%A0" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<h3 id="1-过度规划over-planning">
+<span class="me-2">1. 过度规划（Over-planning）</span><a href="#1-%E8%BF%87%E5%BA%A6%E8%A7%84%E5%88%92over-planning" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td>
+<td class="rouge-code"><pre>症状：花大量 token 生成详细计划，但计划在执行第一步就过时了
+原因：规划时对环境假设太多，实际情况与预期不符
+修复：用 ReAct 代替 Plan &amp; Execute，或规划粒度更粗
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<h3 id="2-规划与执行脱节">
+<span class="me-2">2. 规划与执行脱节</span><a href="#2-%E8%A7%84%E5%88%92%E4%B8%8E%E6%89%A7%E8%A1%8C%E8%84%B1%E8%8A%82" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td>
+<td class="rouge-code"><pre>症状：生成了完美计划，但执行时忘记按计划行事
+原因：计划没有显式传递给执行阶段
+修复：把计划写入 TaskCreate，或在每次执行前重新引用计划
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<h3 id="3-并行滥用barrier-滥用">
+<span class="me-2">3. 并行滥用（Barrier 滥用）</span><a href="#3-%E5%B9%B6%E8%A1%8C%E6%BB%A5%E7%94%A8barrier-%E6%BB%A5%E7%94%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td>
+<td class="rouge-code"><pre>症状：parallel() 到处用，实际上没有减少总时间
+原因：把"概念上独立"等同于"需要同步"
+修复：默认用 pipeline()，只有真正需要全部结果才用 parallel()
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<h3 id="4-无限循环">
+<span class="me-2">4. 无限循环</span><a href="#4-%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td>
+<td class="rouge-code"><pre>症状：Agent 一直规划、一直行动，不知道何时停止
+原因：没有明确的终止条件
+修复：
+  - 设置 maxTurns 上限
+  - 明确定义"完成"的标准（Done Definition）
+  - 使用 Outcome 机制（user.define_outcome + rubric）
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<hr>
+<h2 id="总结">
+<span class="me-2">总结</span><a href="#%E6%80%BB%E7%BB%93" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td>
+<td class="rouge-code"><pre>任务复杂度 ↑
+
+简单问答
+  └─ 直接回答（无规划）
+
+需要推理
+  └─ Adaptive Thinking（模型内置规划）
+
+需要外部信息
+  └─ ReAct（Thought → Action → Observation 循环）
+
+复杂多步骤
+  └─ Plan &amp; Execute
+       ├─ 显式规划阶段（EnterPlanMode / TaskCreate）
+       ├─ 顺序执行（pipeline）
+       └─ 并行执行（parallel，仅在需要全量结果时）
+
+超大规模 / 需要验证
+  └─ 多 Agent Workflow
+       ├─ 扇出搜索（Explore Agent）
+       ├─ 对抗验证（Adversarial Verify）
+       └─ 循环直到收敛（Loop-until-dry）
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p><strong>核心思想：用最简单的规划机制完成任务。只有当更简单的方式不够用时，才升级到更复杂的规划策略。</strong></p>
+<hr>
+<h2 id="相关">
+<span class="me-2">相关</span><a href="#%E7%9B%B8%E5%85%B3" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<ul>
+<li>[[KV Cache 与 Prompt Caching]] — 规划过程中的上下文缓存优化</li>
+<li>[[ReAct]] — ReAct 模式的详细介绍</li>
+<li>[[AI 记忆]] — Agent 跨 Session 的记忆机制</li>
+</ul>
+</div>
+<div class="post-tail-wrapper text-muted">
+<div class="d-flex justify-content-between align-items-center gap-3 mb-3"></div>
+<div class=" post-tail-bottom d-flex justify-content-between align-items-center mt-5 pb-2 ">
+<div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div>
+<div class="share-wrapper d-flex align-items-center"> <span class="share-label text-muted">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Agent%20planning%20-%2024601&url=https%3A%2F%2Flinbonanlibra.github.io%2Fposts%2FAgent-Planning%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter" aria-label="Twitter"> <i class="fa-fw fa-brands fa-square-x-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Agent%20planning%20-%2024601&u=https%3A%2F%2Flinbonanlibra.github.io%2Fposts%2FAgent-Planning%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=https%3A%2F%2Flinbonanlibra.github.io%2Fposts%2FAgent-Planning%2F&text=Agent%20planning%20-%2024601" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Telegram" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <button id="copy-link" aria-label="Copy link" class="btn small" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy link" data-title-succeed="Link copied successfully!"> <i class="fa-fw fas fa-link pe-none fs-6"></i> </button> </span>
+</div>
+</div>
+</div></article></main><aside aria-label="Panel" id="panel-wrapper" class="col-xl-3 ps-2 text-muted"><div class="access">
+<section id="access-lastmod"><h2 class="panel-heading">Recently Updated</h2>
+<ul class="content list-unstyled ps-0 pb-1 ms-1 mt-2">
+<li class="text-truncate lh-lg"> <a href="/posts/MQ(KAKFA-RocketMQ)/">Mq(kakfa Rocketmq)</a>
+</li>
+<li class="text-truncate lh-lg"> <a href="/posts/RocketMq-Features/">Rocketmq features</a>
+</li>
+<li class="text-truncate lh-lg"> <a href="/posts/KMS%E7%B3%BB%E7%BB%9F%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">Kms系统基本知识</a>
+</li>
+<li class="text-truncate lh-lg"> <a href="/posts/Redis-listpack/">Redis Listpack</a>
+</li>
+<li class="text-truncate lh-lg"> <a href="/posts/SDS/">Sds</a>
+</li>
+</ul></section><section><h2 class="panel-heading">Trending Tags</h2>
+<div class="d-flex flex-wrap mt-3 mb-1 me-3"> <a class="post-tag btn btn-outline-primary" href="/tags/note/">note</a> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">AI</a> <a class="post-tag btn btn-outline-primary" href="/tags/memory/">Memory</a> <a class="post-tag btn btn-outline-primary" href="/tags/typography/">typography</a>
+</div></section>
+</div>
+<div class="toc-border-cover z-3"></div>
+<section id="toc-wrapper" class="invisible position-sticky ps-0 pe-4 pb-4"><h2 class="panel-heading ps-3 pb-2 mb-0">Contents</h2>
+<nav id="toc"></nav></section></aside>
+</div>
+<div class="row"><div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 px-md-4">
+<nav class="post-navigation d-flex justify-content-between" aria-label="Post Navigation"> <a href="/posts/KV-Cache-%E4%B8%8E-Prompt-Caching/" class="btn btn-outline-primary" aria-label="Older"><p>Kv cache 与 prompt caching</p></a> <a href="/posts/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80-%E7%AC%94%E8%AE%B0/" class="btn btn-outline-primary" aria-label="Newer"><p>《大模型基础》阅读笔记</p></a></nav><footer aria-label="Site Info" class=" d-flex flex-column justify-content-center text-muted flex-lg-row justify-content-lg-between align-items-lg-center pb-lg-3 "><p>© <time>2026</time> <a href="https://github.com/linbonanlibra">linbonanlibra</a>. <span data-bs-toggle="tooltip" data-bs-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p>
+<p>Using the <a data-bs-toggle="tooltip" data-bs-placement="top" title="v7.6.0" href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme for <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a>.</p></footer>
+</div></div>
+<div id="search-result-wrapper" class="d-flex justify-content-center d-none"><div class="col-11 content">
+<div id="search-hints"><section><h2 class="panel-heading">Trending Tags</h2>
+<div class="d-flex flex-wrap mt-3 mb-1 me-3"> <a class="post-tag btn btn-outline-primary" href="/tags/note/">note</a> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">AI</a> <a class="post-tag btn btn-outline-primary" href="/tags/memory/">Memory</a> <a class="post-tag btn btn-outline-primary" href="/tags/typography/">typography</a>
+</div></section></div>
+<div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div>
+</div></div>
+</div>
+<aside aria-label="Scroll to Top"> <button id="back-to-top" type="button" class="btn btn-lg btn-box-shadow"> <i class="fas fa-angle-up"></i> </button></aside>
+</div>
+<div id="mask" class="d-none position-fixed w-100 h-100 z-1"></div>
+<aside id="notification" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-animation="true" data-bs-autohide="false"><div class="toast-header"> <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+</div>
+<div class="toast-body text-center pt-0">
+<p class="px-2 mb-3">New content available</p>
+<button type="button" class="btn btn-primary" aria-label="Update"> Update </button>
+</div></aside><script> document.addEventListener('DOMContentLoaded', () => { SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<article class="px-1 px-sm-2 px-lg-4 px-xl-0"><header><h2><a href="{url}">{title}</a></h2><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div></header><p>{content}</p></article>', noResultsText: '<p class="mt-5">Oops! No results found.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="me-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); }); </script>
+</body>
+</html>

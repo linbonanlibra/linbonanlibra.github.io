@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f7">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, user-scalable=no initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+<meta name="generator" content="Jekyll v4.4.1">
+<meta property="og:title" content="Claude Code Tool State Machine">
+<meta property="og:locale" content="en">
+<meta name="description" content="Claude Code 工具执行状态机分析">
+<meta name="twitter:description" property="og:description" content="Claude Code 工具执行状态机分析">
+<link rel="canonical" href="https://linbonanlibra.github.io/posts/claude-code-tool-state-machine/">
+<meta property="og:url" content="https://linbonanlibra.github.io/posts/claude-code-tool-state-machine/">
+<meta property="og:site_name" content="24601">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-06-24T00:00:00+08:00">
+<meta property="article:modified_time" content="2026-06-24T00:00:00+08:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Claude Code Tool State Machine"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2026-06-24T00:00:00+08:00","datePublished":"2026-06-24T00:00:00+08:00","description":"Claude Code 工具执行状态机分析","headline":"Claude Code Tool State Machine","mainEntityOfPage":{"@type":"WebPage","@id":"https://linbonanlibra.github.io/posts/claude-code-tool-state-machine/"},"url":"https://linbonanlibra.github.io/posts/claude-code-tool-state-machine/"}</script><title>Claude Code Tool State Machine | 24601</title>
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
+<link rel="manifest" href="/assets/img/favicons/site.webmanifest">
+<link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
+<meta name="apple-mobile-web-app-title" content="24601">
+<meta name="application-name" content="24601">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="/assets/css/jekyll-theme-chirpy.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&amp;family=Source+Sans+Pro:wght@400;600;700;900&amp;display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-web/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/loading-attribute-polyfill@2/dist/loading-attribute-polyfill.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3/dist/css/glightbox.min.css"> <script src="/assets/js/dist/theme.min.js"></script> <script defer src="https://cdn.jsdelivr.net/combine/npm/simple-jekyll-search@1/dest/simple-jekyll-search.min.js,npm/loading-attribute-polyfill@2/dist/loading-attribute-polyfill.umd.min.js,npm/glightbox@3/dist/js/glightbox.min.js,npm/clipboard@2/dist/clipboard.min.js,npm/dayjs@1/dayjs.min.js,npm/dayjs@1/locale/en.js,npm/dayjs@1/plugin/relativeTime.js,npm/dayjs@1/plugin/localizedFormat.js,npm/tocbot@4/dist/tocbot.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script defer src="/app.min.js?baseurl=&amp;register=true"></script>
+</head>
+<body>
+<aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column align-items-end"><header class="profile-wrapper"> <a href="/" id="avatar" class="rounded-circle"><img src="/assets/img/avatar/avatar.png" width="112" height="112" alt="avatar" onerror="this.style.display='none'"></a> <a class="site-title d-block" href="/">24601</a><p class="site-subtitle fst-italic mb-0">-- rua rua rua --</p></header><nav class="flex-column flex-grow-1 w-100 ps-0"><ul class="nav">
+<li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home"></i> <span>HOME</span> </a>
+</li>
+<li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream"></i> <span>CATEGORIES</span> </a>
+</li>
+<li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags"></i> <span>TAGS</span> </a>
+</li>
+<li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive"></i> <span>ARCHIVES</span> </a>
+</li>
+<li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle"></i> <span>ABOUT</span> </a>
+</li>
+</ul></nav><div class="sidebar-bottom d-flex flex-wrap align-items-center w-100"> <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle"> <i class="fas fa-adjust"></i> </button> <span class="icon-border"></span> <a href="https://github.com/linbonanlibra" aria-label="github" target="_blank" rel="noopener noreferrer"> <i class="fab fa-github"></i> </a> <a href="javascript:location.href%20=%20'mailto:'%20+%20['929lbn','163.com'].join('@')" aria-label="email"> <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss"> <i class="fas fa-rss"></i> </a>
+</div></aside><div id="main-wrapper" class="d-flex justify-content-center">
+<div class="container d-flex flex-column px-xxl-5">
+<header id="topbar-wrapper" class="flex-shrink-0" aria-label="Top Bar"><div id="topbar" class="d-flex align-items-center justify-content-between px-lg-3 h-100">
+<nav id="breadcrumb" aria-label="Breadcrumb"> <span> <a href="/">Home</a> </span> <span>Claude Code Tool State Machine</span></nav><button type="button" id="sidebar-trigger" class="btn btn-link" aria-label="Sidebar"> <i class="fas fa-bars fa-fw"></i> </button><div id="topbar-title"> Post</div>
+<button type="button" id="search-trigger" class="btn btn-link" aria-label="Search"> <i class="fas fa-search fa-fw"></i> </button> <search id="search" class="align-items-center ms-3 ms-lg-0"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> </search> <button type="button" class="btn btn-link text-decoration-none" id="search-cancel">Cancel</button>
+</div></header><div class="row flex-grow-1">
+<main aria-label="Main Content" class="col-12 col-lg-11 col-xl-9 px-md-4"><article class="px-1" data-toc="true"><header><h1 data-toc-skip>Claude Code Tool State Machine</h1>
+<div class="post-meta text-muted"> <span> Posted <time data-ts="1782230400" data-df="ll" data-bs-toggle="tooltip" data-bs-placement="bottom"> Jun 24, 2026 </time> </span><div class="d-flex justify-content-between"> <span> By <em> <a href="https://github.com/linbonanlibra">linbonanlibra</a> </em> </span><div> <span class="readtime" data-bs-toggle="tooltip" data-bs-placement="bottom" title="1185 words"> <em>6 min</em> read</span>
+</div>
+</div>
+</div></header><div id="toc-bar" class="d-flex align-items-center justify-content-between invisible"> <span class="label text-truncate">Claude Code Tool State Machine</span> <button type="button" class="toc-trigger btn me-1"> <i class="fa-solid fa-list-ul fa-fw"></i> </button>
+</div>
+<button id="toc-solo-trigger" type="button" class="toc-trigger btn btn-outline-secondary btn-sm"> <span class="label ps-2 pe-1">Contents</span> <i class="fa-solid fa-angle-right fa-fw"></i> </button> <dialog id="toc-popup" class="p-0"><div class="header d-flex flex-row align-items-center justify-content-between">
+<div class="label text-truncate py-2 ms-4">Claude Code Tool State Machine</div>
+<button id="toc-popup-close" type="button" class="btn-close btn-sm mx-3" aria-label="Close"></button>
+</div>
+<div id="toc-popup-content" class="px-4 py-3 pb-4"></div></dialog><div class="content">
+<h1 id="claude-code-工具执行状态机分析">Claude Code 工具执行状态机分析</h1>
+<blockquote><p>分析日期：2026-06-24<br> 源码路径：<code class="language-plaintext highlighter-rouge">src/services/tools/StreamingToolExecutor.ts</code></p></blockquote>
+<hr>
+<h2 id="状态定义">
+<span class="me-2">状态定义</span><a href="#%E7%8A%B6%E6%80%81%E5%AE%9A%E4%B9%89" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<div class="language-typescript highlighter-rouge">
+<div class="code-header"> <span data-label-text="TypeScript"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td>
+<td class="rouge-code"><pre><span class="c1">// StreamingToolExecutor.ts:19</span>
+<span class="kd">type</span> <span class="nx">ToolStatus</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">queued</span><span class="dl">'</span> <span class="o">|</span> <span class="dl">'</span><span class="s1">executing</span><span class="dl">'</span> <span class="o">|</span> <span class="dl">'</span><span class="s1">completed</span><span class="dl">'</span> <span class="o">|</span> <span class="dl">'</span><span class="s1">yielded</span><span class="dl">'</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p>每个被跟踪的工具（<code class="language-plaintext highlighter-rouge">TrackedTool</code>）携带完整的执行上下文：</p>
+<div class="language-typescript highlighter-rouge">
+<div class="code-header"> <span data-label-text="TypeScript"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td>
+<td class="rouge-code"><pre><span class="c1">// StreamingToolExecutor.ts:21-32</span>
+<span class="kd">type</span> <span class="nx">TrackedTool</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">id</span><span class="p">:</span> <span class="kr">string</span>
+  <span class="na">block</span><span class="p">:</span> <span class="nx">ToolUseBlock</span>
+  <span class="na">assistantMessage</span><span class="p">:</span> <span class="nx">AssistantMessage</span>
+  <span class="na">status</span><span class="p">:</span> <span class="nx">ToolStatus</span>                <span class="c1">// 当前状态</span>
+  <span class="na">isConcurrencySafe</span><span class="p">:</span> <span class="nx">boolean</span>        <span class="c1">// 是否允许并发</span>
+  <span class="nx">promise</span><span class="p">?:</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span>
+  <span class="nx">results</span><span class="p">?:</span> <span class="nx">Message</span><span class="p">[]</span>               <span class="c1">// 收集到的执行结果</span>
+  <span class="na">pendingProgress</span><span class="p">:</span> <span class="nx">Message</span><span class="p">[]</span>        <span class="c1">// 实时进度消息</span>
+  <span class="nx">contextModifiers</span><span class="p">?:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="p">(</span><span class="na">context</span><span class="p">:</span> <span class="nx">ToolUseContext</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">ToolUseContext</span><span class="o">&gt;</span>
+<span class="p">}</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<hr>
+<h2 id="状态转换流程">
+<span class="me-2">状态转换流程</span><a href="#%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%E6%B5%81%E7%A8%8B" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td>
+<td class="rouge-code"><pre>addTool() 调用
+     ↓
+  [queued]  ──→ 等待并发条件满足 ──→ [executing] ──→ [completed] ──→ [yielded]
+  已入队列                           工具运行中       执行结束        结果已送出（终态）
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<hr>
+<h2 id="四个状态详解">
+<span class="me-2">四个状态详解</span><a href="#%E5%9B%9B%E4%B8%AA%E7%8A%B6%E6%80%81%E8%AF%A6%E8%A7%A3" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<h3 id="1-queued--排队等待">
+<span class="me-2">1. <code class="language-plaintext highlighter-rouge">queued</code> — 排队等待</span><a href="#1-queued--%E6%8E%92%E9%98%9F%E7%AD%89%E5%BE%85" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>项目</th>
+<th>说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>触发位置</strong></td>
+<td>
+<code class="language-plaintext highlighter-rouge">addTool()</code>（第 76–124 行）</td>
+</tr>
+<tr>
+<td><strong>触发条件</strong></td>
+<td>工具定义存在、输入通过验证、<code class="language-plaintext highlighter-rouge">isConcurrencySafe</code> 已确定</td>
+</tr>
+<tr>
+<td><strong>含义</strong></td>
+<td>工具已登记入队列，尚未获得执行许可</td>
+</tr>
+<tr>
+<td><strong>后续行为</strong></td>
+<td>等待 <code class="language-plaintext highlighter-rouge">processQueue()</code> 调度，检查并发许可</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h3 id="2-executing--正在执行">
+<span class="me-2">2. <code class="language-plaintext highlighter-rouge">executing</code> — 正在执行</span><a href="#2-executing--%E6%AD%A3%E5%9C%A8%E6%89%A7%E8%A1%8C" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>项目</th>
+<th>说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>触发位置</strong></td>
+<td>
+<code class="language-plaintext highlighter-rouge">executeTool()</code>（第 265 行）</td>
+</tr>
+<tr>
+<td><strong>触发条件</strong></td>
+<td>
+<code class="language-plaintext highlighter-rouge">canExecuteTool()</code> 返回 <code class="language-plaintext highlighter-rouge">true</code>
+</td>
+</tr>
+<tr>
+<td><strong>含义</strong></td>
+<td>工具正在主动执行，结果通过 <code class="language-plaintext highlighter-rouge">runToolUse()</code> 异步生成</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="并发控制规则核心设计">
+<span class="me-2">并发控制规则（核心设计）</span><a href="#%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E8%A7%84%E5%88%99%E6%A0%B8%E5%BF%83%E8%AE%BE%E8%AE%A1" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td>
+<td class="rouge-code"><pre>canExecuteTool(isConcurrencySafe):
+  ├─ 无任何工具在执行中         → ✅ 可执行
+  ├─ 有工具执行中 &amp;&amp; 全部是并发安全 &amp;&amp; 本工具也安全 → ✅ 可并行执行
+  └─ 其他情况                  → ❌ 等待
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<ul>
+<li>
+<strong>并发安全工具</strong>（<code class="language-plaintext highlighter-rouge">isConcurrencySafe: true</code>）：可与同类工具<strong>并行运行</strong>
+</li>
+<li>
+<strong>非并发安全工具</strong>（如 Bash）：必须<strong>独占</strong>执行槽，等所有工具结束才能跑</li>
+</ul>
+<hr>
+<h3 id="3-completed--执行完毕">
+<span class="me-2">3. <code class="language-plaintext highlighter-rouge">completed</code> — 执行完毕</span><a href="#3-completed--%E6%89%A7%E8%A1%8C%E5%AE%8C%E6%AF%95" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>项目</th>
+<th>说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>触发位置</strong></td>
+<td>第 289 行、第 385 行、第 83 行</td>
+</tr>
+<tr>
+<td><strong>触发条件</strong></td>
+<td>工具执行完成，或被中止（错误 / 用户中断）</td>
+</tr>
+<tr>
+<td><strong>含义</strong></td>
+<td>结果已收集到 <code class="language-plaintext highlighter-rouge">tool.results</code>，但尚未返回给外层调用方</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="关键边界逻辑">
+<span class="me-2">关键边界逻辑</span><a href="#%E5%85%B3%E9%94%AE%E8%BE%B9%E7%95%8C%E9%80%BB%E8%BE%91" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<div class="language-typescript highlighter-rouge">
+<div class="code-header"> <span data-label-text="TypeScript"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td>
+<td class="rouge-code"><pre><span class="kd">const</span> <span class="nx">collectResults</span> <span class="o">=</span> <span class="k">async </span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// 若在启动前已收到中止信号 → 生成合成错误消息（第 153–205 行）</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">initialAbortReason</span><span class="p">)</span> <span class="p">{</span> <span class="cm">/* 生成合成 ToolResult */</span> <span class="p">}</span>
+
+  <span class="c1">// 正常执行</span>
+  <span class="k">for</span> <span class="k">await </span><span class="p">(</span><span class="kd">const</span> <span class="nx">update</span> <span class="k">of</span> <span class="nx">generator</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">isErrorResult</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// Bash 工具报错 → 级联中止队列中的其他工具（第 359–363 行）</span>
+    <span class="p">}</span>
+    <span class="c1">// 收集进度消息和最终结果</span>
+  <span class="p">}</span>
+
+  <span class="nx">tool</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">completed</span><span class="dl">'</span>  <span class="c1">// 第 385 行</span>
+<span class="p">}</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<h4 id="特殊处理">
+<span class="me-2">特殊处理</span><a href="#%E7%89%B9%E6%AE%8A%E5%A4%84%E7%90%86" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<ul>
+<li>
+<strong>Bash 工具报错</strong>：会级联中止其他排队工具，后者收到合成错误 <code class="language-plaintext highlighter-rouge">ToolResult</code>
+</li>
+<li>
+<strong>用户中断</strong>：根据 <code class="language-plaintext highlighter-rouge">interruptBehavior</code>（<code class="language-plaintext highlighter-rouge">'cancel'</code> / <code class="language-plaintext highlighter-rouge">'block'</code>）决定处理方式（第 233–240 行）</li>
+<li>
+<strong>进度消息</strong>：存入 <code class="language-plaintext highlighter-rouge">pendingProgress</code>，与最终结果分离，优先产出</li>
+</ul>
+<hr>
+<h3 id="4-yielded--结果已送出终态">
+<span class="me-2">4. <code class="language-plaintext highlighter-rouge">yielded</code> — 结果已送出（终态）</span><a href="#4-yielded--%E7%BB%93%E6%9E%9C%E5%B7%B2%E9%80%81%E5%87%BA%E7%BB%88%E6%80%81" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>项目</th>
+<th>说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>触发位置</strong></td>
+<td>
+<code class="language-plaintext highlighter-rouge">getCompletedResults()</code>（第 412–440 行）</td>
+</tr>
+<tr>
+<td><strong>触发条件</strong></td>
+<td><code class="language-plaintext highlighter-rouge">tool.status === 'completed' &amp;&amp; tool.results</code></td>
+</tr>
+<tr>
+<td><strong>含义</strong></td>
+<td>结果已 yield 给消费者，标记为终态防止重复产出</td>
+</tr>
+</tbody>
+</table></div>
+<div class="language-typescript highlighter-rouge">
+<div class="code-header"> <span data-label-text="TypeScript"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+<td class="rouge-code"><pre><span class="c1">// 第 428–433 行</span>
+<span class="k">if </span><span class="p">(</span><span class="nx">tool</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">completed</span><span class="dl">'</span> <span class="o">&amp;&amp;</span> <span class="nx">tool</span><span class="p">.</span><span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">tool</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">yielded</span><span class="dl">'</span>           <span class="c1">// 立刻标记，防止重入</span>
+  <span class="k">for </span><span class="p">(</span><span class="kd">const</span> <span class="nx">message</span> <span class="k">of</span> <span class="nx">tool</span><span class="p">.</span><span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">yield</span> <span class="p">{</span> <span class="nx">message</span><span class="p">,</span> <span class="na">newContext</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">toolUseContext</span> <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="nf">markToolUseAsComplete</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">toolUseContext</span><span class="p">,</span> <span class="nx">tool</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<hr>
+<h2 id="进度消息的特殊处理">
+<span class="me-2">进度消息的特殊处理</span><a href="#%E8%BF%9B%E5%BA%A6%E6%B6%88%E6%81%AF%E7%9A%84%E7%89%B9%E6%AE%8A%E5%A4%84%E7%90%86" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p>进度消息（<code class="language-plaintext highlighter-rouge">type === 'progress'</code>）不与最终结果混合，走独立通道优先产出：</p>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td>
+<td class="rouge-code"><pre>执行期间        →  存入 tool.pendingProgress
+getCompletedResults() 调用时：
+  1. 先 yield 所有 pendingProgress（第 418–422 行）
+  2. 再 yield tool.results（第 429–435 行）
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<hr>
+<h2 id="设计亮点总结">
+<span class="me-2">设计亮点总结</span><a href="#%E8%AE%BE%E8%AE%A1%E4%BA%AE%E7%82%B9%E6%80%BB%E7%BB%93" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>问题</th>
+<th>设计方案</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>进度消息要实时显示</td>
+<td>
+<code class="language-plaintext highlighter-rouge">pendingProgress</code> 单独存，优先于最终结果 yield</td>
+</tr>
+<tr>
+<td>工具并发但要保安全</td>
+<td>
+<code class="language-plaintext highlighter-rouge">isConcurrencySafe</code> 标志控制哪些工具可以并行</td>
+</tr>
+<tr>
+<td>避免重复消费结果</td>
+<td>
+<code class="language-plaintext highlighter-rouge">completed → yielded</code> 这一跳做幂等保护</td>
+</tr>
+<tr>
+<td>错误级联取消</td>
+<td>Bash 报错后，其他 <code class="language-plaintext highlighter-rouge">queued</code> 工具收到合成错误，跳过执行</td>
+</tr>
+<tr>
+<td>中止信号传播</td>
+<td>
+<code class="language-plaintext highlighter-rouge">initialAbortReason</code> 在工具启动前检查，早失败早返回</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="附任务状态机task-state-machine">
+<span class="me-2">附：任务状态机（Task State Machine）</span><a href="#%E9%99%84%E4%BB%BB%E5%8A%A1%E7%8A%B6%E6%80%81%E6%9C%BAtask-state-machine" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p>与工具状态机不同，<code class="language-plaintext highlighter-rouge">Task.ts</code> 中还有一套<strong>任务级</strong>状态机，用于后台任务和 Agent：</p>
+<div class="language-typescript highlighter-rouge">
+<div class="code-header"> <span data-label-text="TypeScript"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td>
+<td class="rouge-code"><pre><span class="c1">// Task.ts:15-20</span>
+<span class="k">export</span> <span class="kd">type</span> <span class="nx">TaskStatus</span> <span class="o">=</span>
+  <span class="o">|</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span>    <span class="c1">// 任务已创建，等待启动</span>
+  <span class="o">|</span> <span class="dl">'</span><span class="s1">running</span><span class="dl">'</span>    <span class="c1">// 任务正在执行</span>
+  <span class="o">|</span> <span class="dl">'</span><span class="s1">completed</span><span class="dl">'</span>  <span class="c1">// 任务成功完成</span>
+  <span class="o">|</span> <span class="dl">'</span><span class="s1">failed</span><span class="dl">'</span>     <span class="c1">// 任务执行失败</span>
+  <span class="o">|</span> <span class="dl">'</span><span class="s1">killed</span><span class="dl">'</span>     <span class="c1">// 任务被用户停止</span>
+
+<span class="k">export</span> <span class="kd">function</span> <span class="nf">isTerminalTaskStatus</span><span class="p">(</span><span class="nx">status</span><span class="p">:</span> <span class="nx">TaskStatus</span><span class="p">):</span> <span class="nx">boolean</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">status</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">completed</span><span class="dl">'</span> <span class="o">||</span> <span class="nx">status</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">failed</span><span class="dl">'</span> <span class="o">||</span> <span class="nx">status</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">killed</span><span class="dl">'</span>
+<span class="p">}</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p>两套状态机职责分离：</p>
+<ul>
+<li>
+<strong>ToolStatus</strong>：管理单次工具调用的执行生命周期</li>
+<li>
+<strong>TaskStatus</strong>：管理后台长任务 / Agent 的整体生命周期</li>
+</ul>
+</div>
+<div class="post-tail-wrapper text-muted">
+<div class="d-flex justify-content-between align-items-center gap-3 mb-3"></div>
+<div class=" post-tail-bottom d-flex justify-content-between align-items-center mt-5 pb-2 ">
+<div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div>
+<div class="share-wrapper d-flex align-items-center"> <span class="share-label text-muted">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Claude%20Code%20Tool%20State%20Machine%20-%2024601&url=https%3A%2F%2Flinbonanlibra.github.io%2Fposts%2Fclaude-code-tool-state-machine%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter" aria-label="Twitter"> <i class="fa-fw fa-brands fa-square-x-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Claude%20Code%20Tool%20State%20Machine%20-%2024601&u=https%3A%2F%2Flinbonanlibra.github.io%2Fposts%2Fclaude-code-tool-state-machine%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=https%3A%2F%2Flinbonanlibra.github.io%2Fposts%2Fclaude-code-tool-state-machine%2F&text=Claude%20Code%20Tool%20State%20Machine%20-%2024601" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Telegram" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <button id="copy-link" aria-label="Copy link" class="btn small" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy link" data-title-succeed="Link copied successfully!"> <i class="fa-fw fas fa-link pe-none fs-6"></i> </button> </span>
+</div>
+</div>
+</div></article></main><aside aria-label="Panel" id="panel-wrapper" class="col-xl-3 ps-2 text-muted"><div class="access">
+<section id="access-lastmod"><h2 class="panel-heading">Recently Updated</h2>
+<ul class="content list-unstyled ps-0 pb-1 ms-1 mt-2">
+<li class="text-truncate lh-lg"> <a href="/posts/MQ(KAKFA-RocketMQ)/">Mq(kakfa Rocketmq)</a>
+</li>
+<li class="text-truncate lh-lg"> <a href="/posts/RocketMq-Features/">Rocketmq features</a>
+</li>
+<li class="text-truncate lh-lg"> <a href="/posts/KMS%E7%B3%BB%E7%BB%9F%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">Kms系统基本知识</a>
+</li>
+<li class="text-truncate lh-lg"> <a href="/posts/Redis-listpack/">Redis Listpack</a>
+</li>
+<li class="text-truncate lh-lg"> <a href="/posts/SDS/">Sds</a>
+</li>
+</ul></section><section><h2 class="panel-heading">Trending Tags</h2>
+<div class="d-flex flex-wrap mt-3 mb-1 me-3"> <a class="post-tag btn btn-outline-primary" href="/tags/note/">note</a> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">AI</a> <a class="post-tag btn btn-outline-primary" href="/tags/memory/">Memory</a> <a class="post-tag btn btn-outline-primary" href="/tags/typography/">typography</a>
+</div></section>
+</div>
+<div class="toc-border-cover z-3"></div>
+<section id="toc-wrapper" class="invisible position-sticky ps-0 pe-4 pb-4"><h2 class="panel-heading ps-3 pb-2 mb-0">Contents</h2>
+<nav id="toc"></nav></section></aside>
+</div>
+<div class="row"><div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 px-md-4">
+<nav class="post-navigation d-flex justify-content-between" aria-label="Post Navigation"> <a href="/posts/claude-code-session-and-compaction/" class="btn btn-outline-primary" aria-label="Older"><p>Claude Code Session And Compaction</p></a> <a href="/posts/Agent-Reasoning/" class="btn btn-outline-primary" aria-label="Newer"><p>Agent reasoning</p></a></nav><footer aria-label="Site Info" class=" d-flex flex-column justify-content-center text-muted flex-lg-row justify-content-lg-between align-items-lg-center pb-lg-3 "><p>© <time>2026</time> <a href="https://github.com/linbonanlibra">linbonanlibra</a>. <span data-bs-toggle="tooltip" data-bs-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p>
+<p>Using the <a data-bs-toggle="tooltip" data-bs-placement="top" title="v7.6.0" href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme for <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a>.</p></footer>
+</div></div>
+<div id="search-result-wrapper" class="d-flex justify-content-center d-none"><div class="col-11 content">
+<div id="search-hints"><section><h2 class="panel-heading">Trending Tags</h2>
+<div class="d-flex flex-wrap mt-3 mb-1 me-3"> <a class="post-tag btn btn-outline-primary" href="/tags/note/">note</a> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">AI</a> <a class="post-tag btn btn-outline-primary" href="/tags/memory/">Memory</a> <a class="post-tag btn btn-outline-primary" href="/tags/typography/">typography</a>
+</div></section></div>
+<div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div>
+</div></div>
+</div>
+<aside aria-label="Scroll to Top"> <button id="back-to-top" type="button" class="btn btn-lg btn-box-shadow"> <i class="fas fa-angle-up"></i> </button></aside>
+</div>
+<div id="mask" class="d-none position-fixed w-100 h-100 z-1"></div>
+<aside id="notification" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-animation="true" data-bs-autohide="false"><div class="toast-header"> <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+</div>
+<div class="toast-body text-center pt-0">
+<p class="px-2 mb-3">New content available</p>
+<button type="button" class="btn btn-primary" aria-label="Update"> Update </button>
+</div></aside><script> document.addEventListener('DOMContentLoaded', () => { SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<article class="px-1 px-sm-2 px-lg-4 px-xl-0"><header><h2><a href="{url}">{title}</a></h2><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div></header><p>{content}</p></article>', noResultsText: '<p class="mt-5">Oops! No results found.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="me-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); }); </script>
+</body>
+</html>

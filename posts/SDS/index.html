@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f7">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, user-scalable=no initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+<meta name="generator" content="Jekyll v4.4.1">
+<meta property="og:title" content="Sds">
+<meta property="og:locale" content="en">
+<meta name="description" content="Redis SDS（Simple Dynamic String）技术笔记">
+<meta name="twitter:description" property="og:description" content="Redis SDS（Simple Dynamic String）技术笔记">
+<link rel="canonical" href="https://linbonanlibra.github.io/posts/SDS/">
+<meta property="og:url" content="https://linbonanlibra.github.io/posts/SDS/">
+<meta property="og:site_name" content="24601">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-07-03T00:00:00+08:00">
+<meta property="article:modified_time" content="2026-07-03T00:00:00+08:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sds"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2026-07-03T00:00:00+08:00","datePublished":"2026-07-03T00:00:00+08:00","description":"Redis SDS（Simple Dynamic String）技术笔记","headline":"Sds","mainEntityOfPage":{"@type":"WebPage","@id":"https://linbonanlibra.github.io/posts/SDS/"},"url":"https://linbonanlibra.github.io/posts/SDS/"}</script><title>Sds | 24601</title>
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
+<link rel="manifest" href="/assets/img/favicons/site.webmanifest">
+<link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
+<meta name="apple-mobile-web-app-title" content="24601">
+<meta name="application-name" content="24601">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="/assets/css/jekyll-theme-chirpy.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&amp;family=Source+Sans+Pro:wght@400;600;700;900&amp;display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-web/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/loading-attribute-polyfill@2/dist/loading-attribute-polyfill.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3/dist/css/glightbox.min.css"> <script src="/assets/js/dist/theme.min.js"></script> <script defer src="https://cdn.jsdelivr.net/combine/npm/simple-jekyll-search@1/dest/simple-jekyll-search.min.js,npm/loading-attribute-polyfill@2/dist/loading-attribute-polyfill.umd.min.js,npm/glightbox@3/dist/js/glightbox.min.js,npm/clipboard@2/dist/clipboard.min.js,npm/dayjs@1/dayjs.min.js,npm/dayjs@1/locale/en.js,npm/dayjs@1/plugin/relativeTime.js,npm/dayjs@1/plugin/localizedFormat.js,npm/tocbot@4/dist/tocbot.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script defer src="/app.min.js?baseurl=&amp;register=true"></script>
+</head>
+<body>
+<aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column align-items-end"><header class="profile-wrapper"> <a href="/" id="avatar" class="rounded-circle"><img src="/assets/img/avatar/avatar.png" width="112" height="112" alt="avatar" onerror="this.style.display='none'"></a> <a class="site-title d-block" href="/">24601</a><p class="site-subtitle fst-italic mb-0">-- rua rua rua --</p></header><nav class="flex-column flex-grow-1 w-100 ps-0"><ul class="nav">
+<li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home"></i> <span>HOME</span> </a>
+</li>
+<li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream"></i> <span>CATEGORIES</span> </a>
+</li>
+<li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags"></i> <span>TAGS</span> </a>
+</li>
+<li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive"></i> <span>ARCHIVES</span> </a>
+</li>
+<li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle"></i> <span>ABOUT</span> </a>
+</li>
+</ul></nav><div class="sidebar-bottom d-flex flex-wrap align-items-center w-100"> <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle"> <i class="fas fa-adjust"></i> </button> <span class="icon-border"></span> <a href="https://github.com/linbonanlibra" aria-label="github" target="_blank" rel="noopener noreferrer"> <i class="fab fa-github"></i> </a> <a href="javascript:location.href%20=%20'mailto:'%20+%20['929lbn','163.com'].join('@')" aria-label="email"> <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss"> <i class="fas fa-rss"></i> </a>
+</div></aside><div id="main-wrapper" class="d-flex justify-content-center">
+<div class="container d-flex flex-column px-xxl-5">
+<header id="topbar-wrapper" class="flex-shrink-0" aria-label="Top Bar"><div id="topbar" class="d-flex align-items-center justify-content-between px-lg-3 h-100">
+<nav id="breadcrumb" aria-label="Breadcrumb"> <span> <a href="/">Home</a> </span> <span>Sds</span></nav><button type="button" id="sidebar-trigger" class="btn btn-link" aria-label="Sidebar"> <i class="fas fa-bars fa-fw"></i> </button><div id="topbar-title"> Post</div>
+<button type="button" id="search-trigger" class="btn btn-link" aria-label="Search"> <i class="fas fa-search fa-fw"></i> </button> <search id="search" class="align-items-center ms-3 ms-lg-0"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> </search> <button type="button" class="btn btn-link text-decoration-none" id="search-cancel">Cancel</button>
+</div></header><div class="row flex-grow-1">
+<main aria-label="Main Content" class="col-12 col-lg-11 col-xl-9 px-md-4"><article class="px-1" data-toc="true"><header><h1 data-toc-skip>Sds</h1>
+<div class="post-meta text-muted"> <span> Posted <time data-ts="1783008000" data-df="ll" data-bs-toggle="tooltip" data-bs-placement="bottom"> Jul 3, 2026 </time> </span><div class="d-flex justify-content-between"> <span> By <em> <a href="https://github.com/linbonanlibra">linbonanlibra</a> </em> </span><div> <span class="readtime" data-bs-toggle="tooltip" data-bs-placement="bottom" title="1251 words"> <em>6 min</em> read</span>
+</div>
+</div>
+</div></header><div id="toc-bar" class="d-flex align-items-center justify-content-between invisible"> <span class="label text-truncate">Sds</span> <button type="button" class="toc-trigger btn me-1"> <i class="fa-solid fa-list-ul fa-fw"></i> </button>
+</div>
+<button id="toc-solo-trigger" type="button" class="toc-trigger btn btn-outline-secondary btn-sm"> <span class="label ps-2 pe-1">Contents</span> <i class="fa-solid fa-angle-right fa-fw"></i> </button> <dialog id="toc-popup" class="p-0"><div class="header d-flex flex-row align-items-center justify-content-between">
+<div class="label text-truncate py-2 ms-4">Sds</div>
+<button id="toc-popup-close" type="button" class="btn-close btn-sm mx-3" aria-label="Close"></button>
+</div>
+<div id="toc-popup-content" class="px-4 py-3 pb-4"></div></dialog><div class="content">
+<h1 id="redis-sdssimple-dynamic-string技术笔记">Redis SDS（Simple Dynamic String）技术笔记</h1>
+<hr>
+<h2 id="一为什么不直接用-c-字符串">
+<span class="me-2">一、为什么不直接用 C 字符串？</span><a href="#%E4%B8%80%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E7%9B%B4%E6%8E%A5%E7%94%A8-c-%E5%AD%97%E7%AC%A6%E4%B8%B2" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<div class="language-c highlighter-rouge">
+<div class="code-header"> <span data-label-text="C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td>
+<td class="rouge-code"><pre><span class="kt">char</span> <span class="o">*</span><span class="n">s</span> <span class="o">=</span> <span class="s">"hello"</span><span class="p">;</span>  <span class="c1">// C 原生字符串</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>问题</th>
+<th>原因</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>获取长度 O(N)</td>
+<td>需要遍历到 <code class="language-plaintext highlighter-rouge">\0</code> 才知道长度</td>
+</tr>
+<tr>
+<td>不安全</td>
+<td>
+<code class="language-plaintext highlighter-rouge">strcat</code> 等操作不检查缓冲区边界，容易溢出</td>
+</tr>
+<tr>
+<td>不支持二进制数据</td>
+<td>遇到 <code class="language-plaintext highlighter-rouge">\0</code> 就认为字符串结束，无法存图片、序列化数据等</td>
+</tr>
+<tr>
+<td>频繁 realloc</td>
+<td>每次追加都需要重新分配内存</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="二sds-的数据结构">
+<span class="me-2">二、SDS 的数据结构</span><a href="#%E4%BA%8Csds-%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<div class="language-c highlighter-rouge">
+<div class="code-header"> <span data-label-text="C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td>
+<td class="rouge-code"><pre><span class="k">struct</span> <span class="n">__attribute__</span> <span class="p">((</span><span class="n">__packed__</span><span class="p">))</span> <span class="n">sdshdr8</span> <span class="p">{</span>
+    <span class="kt">uint8_t</span>  <span class="n">len</span><span class="p">;</span>    <span class="c1">// 已使用长度</span>
+    <span class="kt">uint8_t</span>  <span class="n">alloc</span><span class="p">;</span>  <span class="c1">// 总分配长度（不含 header 和 \0）</span>
+    <span class="kt">uint8_t</span>  <span class="n">flags</span><span class="p">;</span>  <span class="c1">// 低3位标识 header 类型</span>
+    <span class="kt">char</span>     <span class="n">buf</span><span class="p">[];</span>  <span class="c1">// 实际数据</span>
+<span class="p">};</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p>内存布局：</p>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td>
+<td class="rouge-code"><pre>+-----+-------+-------+---+---+---+---+---+---+
+| len | alloc | flags | h | e | l | l | o | \0|
++-----+-------+-------+---+---+---+---+---+---+
+ ←── header ──→        ←────── buf[] ──────────→
+                        ↑
+            对外暴露的指针指向这里（兼容 C 字符串）
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<blockquote><p>对外暴露的是 <code class="language-plaintext highlighter-rouge">buf</code> 的指针，因此 SDS 可以直接传给 C 标准库函数，完全兼容。</p></blockquote>
+<hr>
+<h2 id="三五种-header-类型">
+<span class="me-2">三、五种 header 类型</span><a href="#%E4%B8%89%E4%BA%94%E7%A7%8D-header-%E7%B1%BB%E5%9E%8B" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p>Redis 根据字符串长度自动选择合适的 header，节省内存：</p>
+<div class="language-c highlighter-rouge">
+<div class="code-header"> <span data-label-text="C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td>
+<td class="rouge-code"><pre><span class="k">struct</span> <span class="n">sdshdr5</span>  <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>  <span class="c1">// 长度 &lt; 32，len 直接编码在 flags 里</span>
+<span class="k">struct</span> <span class="n">sdshdr8</span>  <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>  <span class="c1">// 长度 &lt; 256，  len/alloc 各占 1 字节</span>
+<span class="k">struct</span> <span class="n">sdshdr16</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>  <span class="c1">// 长度 &lt; 65536，各占 2 字节</span>
+<span class="k">struct</span> <span class="n">sdshdr32</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>  <span class="c1">// 各占 4 字节</span>
+<span class="k">struct</span> <span class="n">sdshdr64</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>  <span class="c1">// 各占 8 字节</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<hr>
+<h2 id="四核心特性">
+<span class="me-2">四、核心特性</span><a href="#%E5%9B%9B%E6%A0%B8%E5%BF%83%E7%89%B9%E6%80%A7" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<h3 id="1-o1-获取长度">
+<span class="me-2">1. O(1) 获取长度</span><a href="#1-o1-%E8%8E%B7%E5%8F%96%E9%95%BF%E5%BA%A6" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="language-c highlighter-rouge">
+<div class="code-header"> <span data-label-text="C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td>
+<td class="rouge-code"><pre><span class="c1">// C 字符串：O(N)，需要遍历到 \0</span>
+<span class="n">strlen</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+
+<span class="c1">// SDS：O(1)，直接读 header 字段</span>
+<span class="n">sds</span><span class="o">-&gt;</span><span class="n">len</span><span class="p">;</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<h3 id="2-预分配策略追加时多分配减少-realloc">
+<span class="me-2">2. 预分配策略（追加时多分配，减少 realloc）</span><a href="#2-%E9%A2%84%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5%E8%BF%BD%E5%8A%A0%E6%97%B6%E5%A4%9A%E5%88%86%E9%85%8D%E5%87%8F%E5%B0%91-realloc" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="language-c highlighter-rouge">
+<div class="code-header"> <span data-label-text="C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td>
+<td class="rouge-code"><pre><span class="c1">// Redis 源码中的扩容逻辑（简化）</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">new_len</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="n">MB</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">new_alloc</span> <span class="o">=</span> <span class="n">new_len</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>   <span class="c1">// 小于 1MB：分配两倍所需空间</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">new_alloc</span> <span class="o">=</span> <span class="n">new_len</span> <span class="o">+</span> <span class="mi">1</span><span class="n">MB</span><span class="p">;</span> <span class="c1">// 大于 1MB：每次多分配 1MB</span>
+<span class="p">}</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p>图示：</p>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td>
+<td class="rouge-code"><pre>追加 " world" 后（new_len=11）：
+
+[len=11 | alloc=22 | flags | h e l l o   w o r l d \0 |  预留空间  ]
+                                                          ↑ 下次追加无需 realloc
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<h3 id="3-惰性空间释放">
+<span class="me-2">3. 惰性空间释放</span><a href="#3-%E6%83%B0%E6%80%A7%E7%A9%BA%E9%97%B4%E9%87%8A%E6%94%BE" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>字符串缩短时，<strong>不立即释放内存</strong>，只更新 <code class="language-plaintext highlighter-rouge">len</code>，多余空间留着备用：</p>
+<div class="language-c highlighter-rouge">
+<div class="code-header"> <span data-label-text="C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td>
+<td class="rouge-code"><pre><span class="c1">// "hello world" 截断为 "hello"</span>
+<span class="n">s</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>  <span class="c1">// 只改 len，alloc 仍然是 11</span>
+<span class="c1">// 内存保留，下次追加可直接复用</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<h3 id="4-二进制安全">
+<span class="me-2">4. 二进制安全</span><a href="#4-%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E5%85%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>以 <code class="language-plaintext highlighter-rouge">len</code> 判断长度，而非 <code class="language-plaintext highlighter-rouge">\0</code>，因此内容中可以包含任意字节：</p>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td>
+<td class="rouge-code"><pre>C 字符串： h  e  l \0  o  → 认为到 \0 结束，长度=3（数据截断！）
+SDS：      h  e  l \0  o  → len=5，完整保留，长度=5
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p>这使得 Redis 可以存储图片、音频、序列化对象等任意二进制数据。</p>
+<hr>
+<h2 id="五哪些上层结构依赖-sds">
+<span class="me-2">五、哪些上层结构依赖 SDS？</span><a href="#%E4%BA%94%E5%93%AA%E4%BA%9B%E4%B8%8A%E5%B1%82%E7%BB%93%E6%9E%84%E4%BE%9D%E8%B5%96-sds" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p>几乎所有 Redis 数据类型都用到了 SDS，但角色不同：</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>数据结构</th>
+<th>依赖 SDS 的地方</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>String</strong></td>
+<td>值本身直接存为 SDS</td>
+</tr>
+<tr>
+<td><strong>Hash</strong></td>
+<td>hashtable 编码下，field 和 value 都是 SDS</td>
+</tr>
+<tr>
+<td><strong>List</strong></td>
+<td>quicklist 节点中的字符串元素</td>
+</tr>
+<tr>
+<td><strong>Set</strong></td>
+<td>hashtable 编码下，每个 member 是 SDS</td>
+</tr>
+<tr>
+<td><strong>Zset</strong></td>
+<td>skiplist 编码下，member 是 SDS</td>
+</tr>
+<tr>
+<td><strong>所有 Key 名称</strong></td>
+<td>Redis 的 key 本身就是 SDS</td>
+</tr>
+</tbody>
+</table></div>
+<p>Redis <strong>内部</strong>也使用 SDS（复用其动态扩容能力）：</p>
+<div class="language-c highlighter-rouge">
+<div class="code-header"> <span data-label-text="C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+<td class="rouge-code"><pre><span class="c1">// server.h</span>
+<span class="k">struct</span> <span class="n">redisServer</span> <span class="p">{</span>
+    <span class="n">sds</span> <span class="n">aof_buf</span><span class="p">;</span>   <span class="c1">// AOF 写入缓冲区</span>
+<span class="p">};</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">client</span> <span class="p">{</span>
+    <span class="n">sds</span> <span class="n">querybuf</span><span class="p">;</span>  <span class="c1">// 客户端输入缓冲区</span>
+<span class="p">}</span> <span class="n">client</span><span class="p">;</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<hr>
+<h2 id="六为什么-sds-需要追加预分配特性">
+<span class="me-2">六、为什么 SDS 需要追加/预分配特性？</span><a href="#%E5%85%AD%E4%B8%BA%E4%BB%80%E4%B9%88-sds-%E9%9C%80%E8%A6%81%E8%BF%BD%E5%8A%A0%E9%A2%84%E5%88%86%E9%85%8D%E7%89%B9%E6%80%A7" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<h3 id="直接动机面向用户的-append-命令">
+<span class="me-2">直接动机：面向用户的 APPEND 命令</span><a href="#%E7%9B%B4%E6%8E%A5%E5%8A%A8%E6%9C%BA%E9%9D%A2%E5%90%91%E7%94%A8%E6%88%B7%E7%9A%84-append-%E5%91%BD%E4%BB%A4" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td>
+<td class="rouge-code"><pre>APPEND key "hello"
+APPEND key " world"
+APPEND key "!"
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p>String 作为通用值类型，需要支持原地动态修改，预分配能减少 realloc 次数。</p>
+<h3 id="顺带受益内部缓冲区复用">
+<span class="me-2">顺带受益：内部缓冲区复用</span><a href="#%E9%A1%BA%E5%B8%A6%E5%8F%97%E7%9B%8A%E5%86%85%E9%83%A8%E7%BC%93%E5%86%B2%E5%8C%BA%E5%A4%8D%E7%94%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>AOF buffer 和客户端 querybuf 也是 SDS，但这更多是<strong>复用现有工具</strong>，而非 SDS 设计追加特性的原始驱动力：</p>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td>
+<td class="rouge-code"><pre>SDS 设计追加特性  ← 主要因为 String 类型本身需要支持动态修改
+AOF buffer 选用 SDS ← SDS 的能力恰好满足需求，顺手复用
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<hr>
+<h2 id="七与-listpack-的分配策略对比">
+<span class="me-2">七、与 listpack 的分配策略对比</span><a href="#%E4%B8%83%E4%B8%8E-listpack-%E7%9A%84%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5%E5%AF%B9%E6%AF%94" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th> </th>
+<th>SDS</th>
+<th>listpack</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>分配策略</td>
+<td>预分配（容量翻倍 / +1MB）</td>
+<td>精确 realloc</td>
+</tr>
+<tr>
+<td>内存占用</td>
+<td>略有预留空间</td>
+<td>零浪费</td>
+</tr>
+<tr>
+<td>追加性能</td>
+<td>均摊 O(1)</td>
+<td>每次可能拷贝</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>持续追加、频繁修改的字符串</td>
+<td>元素少、写入稳定的小数据集</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote><p><strong>核心原则：数据的变化模式决定分配策略。</strong> 追加频繁就预分配，写入稳定就精确分配。</p></blockquote>
+<hr>
+<h2 id="八总结对比">
+<span class="me-2">八、总结对比</span><a href="#%E5%85%AB%E6%80%BB%E7%BB%93%E5%AF%B9%E6%AF%94" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>特性</th>
+<th>C 字符串</th>
+<th>SDS</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>获取长度</td>
+<td>O(N)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>缓冲区安全</td>
+<td>❌</td>
+<td>✅ 自动扩容检查</td>
+</tr>
+<tr>
+<td>二进制安全</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>追加性能</td>
+<td>每次 realloc</td>
+<td>预分配，均摊 O(1)</td>
+</tr>
+<tr>
+<td>缩短时内存</td>
+<td>立即释放</td>
+<td>惰性释放，保留备用</td>
+</tr>
+<tr>
+<td>兼容 C 函数</td>
+<td>✅</td>
+<td>✅（buf 指针直接兼容）</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="post-tail-wrapper text-muted">
+<div class="d-flex justify-content-between align-items-center gap-3 mb-3"></div>
+<div class=" post-tail-bottom d-flex justify-content-between align-items-center mt-5 pb-2 ">
+<div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div>
+<div class="share-wrapper d-flex align-items-center"> <span class="share-label text-muted">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Sds%20-%2024601&url=https%3A%2F%2Flinbonanlibra.github.io%2Fposts%2FSDS%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter" aria-label="Twitter"> <i class="fa-fw fa-brands fa-square-x-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Sds%20-%2024601&u=https%3A%2F%2Flinbonanlibra.github.io%2Fposts%2FSDS%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=https%3A%2F%2Flinbonanlibra.github.io%2Fposts%2FSDS%2F&text=Sds%20-%2024601" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Telegram" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <button id="copy-link" aria-label="Copy link" class="btn small" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy link" data-title-succeed="Link copied successfully!"> <i class="fa-fw fas fa-link pe-none fs-6"></i> </button> </span>
+</div>
+</div>
+</div></article></main><aside aria-label="Panel" id="panel-wrapper" class="col-xl-3 ps-2 text-muted"><div class="access">
+<section id="access-lastmod"><h2 class="panel-heading">Recently Updated</h2>
+<ul class="content list-unstyled ps-0 pb-1 ms-1 mt-2">
+<li class="text-truncate lh-lg"> <a href="/posts/MQ(KAKFA-RocketMQ)/">Mq(kakfa Rocketmq)</a>
+</li>
+<li class="text-truncate lh-lg"> <a href="/posts/RocketMq-Features/">Rocketmq features</a>
+</li>
+<li class="text-truncate lh-lg"> <a href="/posts/KMS%E7%B3%BB%E7%BB%9F%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">Kms系统基本知识</a>
+</li>
+<li class="text-truncate lh-lg"> <a href="/posts/Redis-listpack/">Redis Listpack</a>
+</li>
+<li class="text-truncate lh-lg"> <a href="/posts/SDS/">Sds</a>
+</li>
+</ul></section><section><h2 class="panel-heading">Trending Tags</h2>
+<div class="d-flex flex-wrap mt-3 mb-1 me-3"> <a class="post-tag btn btn-outline-primary" href="/tags/note/">note</a> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">AI</a> <a class="post-tag btn btn-outline-primary" href="/tags/memory/">Memory</a> <a class="post-tag btn btn-outline-primary" href="/tags/typography/">typography</a>
+</div></section>
+</div>
+<div class="toc-border-cover z-3"></div>
+<section id="toc-wrapper" class="invisible position-sticky ps-0 pe-4 pb-4"><h2 class="panel-heading ps-3 pb-2 mb-0">Contents</h2>
+<nav id="toc"></nav></section></aside>
+</div>
+<div class="row"><div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 px-md-4">
+<nav class="post-navigation d-flex justify-content-between" aria-label="Post Navigation"> <a href="/posts/Redis-listpack/" class="btn btn-outline-primary" aria-label="Older"><p>Redis Listpack</p></a> <a href="/posts/MQ(KAKFA-RocketMQ)/" class="btn btn-outline-primary" aria-label="Newer"><p>Mq(kakfa Rocketmq)</p></a></nav><footer aria-label="Site Info" class=" d-flex flex-column justify-content-center text-muted flex-lg-row justify-content-lg-between align-items-lg-center pb-lg-3 "><p>© <time>2026</time> <a href="https://github.com/linbonanlibra">linbonanlibra</a>. <span data-bs-toggle="tooltip" data-bs-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p>
+<p>Using the <a data-bs-toggle="tooltip" data-bs-placement="top" title="v7.6.0" href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme for <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a>.</p></footer>
+</div></div>
+<div id="search-result-wrapper" class="d-flex justify-content-center d-none"><div class="col-11 content">
+<div id="search-hints"><section><h2 class="panel-heading">Trending Tags</h2>
+<div class="d-flex flex-wrap mt-3 mb-1 me-3"> <a class="post-tag btn btn-outline-primary" href="/tags/note/">note</a> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">AI</a> <a class="post-tag btn btn-outline-primary" href="/tags/memory/">Memory</a> <a class="post-tag btn btn-outline-primary" href="/tags/typography/">typography</a>
+</div></section></div>
+<div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div>
+</div></div>
+</div>
+<aside aria-label="Scroll to Top"> <button id="back-to-top" type="button" class="btn btn-lg btn-box-shadow"> <i class="fas fa-angle-up"></i> </button></aside>
+</div>
+<div id="mask" class="d-none position-fixed w-100 h-100 z-1"></div>
+<aside id="notification" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-animation="true" data-bs-autohide="false"><div class="toast-header"> <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+</div>
+<div class="toast-body text-center pt-0">
+<p class="px-2 mb-3">New content available</p>
+<button type="button" class="btn btn-primary" aria-label="Update"> Update </button>
+</div></aside><script> document.addEventListener('DOMContentLoaded', () => { SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<article class="px-1 px-sm-2 px-lg-4 px-xl-0"><header><h2><a href="{url}">{title}</a></h2><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div></header><p>{content}</p></article>', noResultsText: '<p class="mt-5">Oops! No results found.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="me-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); }); </script>
+</body>
+</html>

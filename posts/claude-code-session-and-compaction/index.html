@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f7">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, user-scalable=no initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+<meta name="generator" content="Jekyll v4.4.1">
+<meta property="og:title" content="Claude Code Session And Compaction">
+<meta property="og:locale" content="en">
+<meta name="description" content="Claude Code Session 与压缩机制原理">
+<meta name="twitter:description" property="og:description" content="Claude Code Session 与压缩机制原理">
+<link rel="canonical" href="https://linbonanlibra.github.io/posts/claude-code-session-and-compaction/">
+<meta property="og:url" content="https://linbonanlibra.github.io/posts/claude-code-session-and-compaction/">
+<meta property="og:site_name" content="24601">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-06-24T00:00:00+08:00">
+<meta property="article:modified_time" content="2026-06-24T00:00:00+08:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Claude Code Session And Compaction"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2026-06-24T00:00:00+08:00","datePublished":"2026-06-24T00:00:00+08:00","description":"Claude Code Session 与压缩机制原理","headline":"Claude Code Session And Compaction","mainEntityOfPage":{"@type":"WebPage","@id":"https://linbonanlibra.github.io/posts/claude-code-session-and-compaction/"},"url":"https://linbonanlibra.github.io/posts/claude-code-session-and-compaction/"}</script><title>Claude Code Session And Compaction | 24601</title>
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
+<link rel="manifest" href="/assets/img/favicons/site.webmanifest">
+<link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
+<meta name="apple-mobile-web-app-title" content="24601">
+<meta name="application-name" content="24601">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="/assets/css/jekyll-theme-chirpy.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&amp;family=Source+Sans+Pro:wght@400;600;700;900&amp;display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-web/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/loading-attribute-polyfill@2/dist/loading-attribute-polyfill.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3/dist/css/glightbox.min.css"> <script src="/assets/js/dist/theme.min.js"></script> <script defer src="https://cdn.jsdelivr.net/combine/npm/simple-jekyll-search@1/dest/simple-jekyll-search.min.js,npm/loading-attribute-polyfill@2/dist/loading-attribute-polyfill.umd.min.js,npm/glightbox@3/dist/js/glightbox.min.js,npm/clipboard@2/dist/clipboard.min.js,npm/dayjs@1/dayjs.min.js,npm/dayjs@1/locale/en.js,npm/dayjs@1/plugin/relativeTime.js,npm/dayjs@1/plugin/localizedFormat.js,npm/tocbot@4/dist/tocbot.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script defer src="/app.min.js?baseurl=&amp;register=true"></script>
+</head>
+<body>
+<aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column align-items-end"><header class="profile-wrapper"> <a href="/" id="avatar" class="rounded-circle"><img src="/assets/img/avatar/avatar.png" width="112" height="112" alt="avatar" onerror="this.style.display='none'"></a> <a class="site-title d-block" href="/">24601</a><p class="site-subtitle fst-italic mb-0">-- rua rua rua --</p></header><nav class="flex-column flex-grow-1 w-100 ps-0"><ul class="nav">
+<li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home"></i> <span>HOME</span> </a>
+</li>
+<li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream"></i> <span>CATEGORIES</span> </a>
+</li>
+<li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags"></i> <span>TAGS</span> </a>
+</li>
+<li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive"></i> <span>ARCHIVES</span> </a>
+</li>
+<li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle"></i> <span>ABOUT</span> </a>
+</li>
+</ul></nav><div class="sidebar-bottom d-flex flex-wrap align-items-center w-100"> <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle"> <i class="fas fa-adjust"></i> </button> <span class="icon-border"></span> <a href="https://github.com/linbonanlibra" aria-label="github" target="_blank" rel="noopener noreferrer"> <i class="fab fa-github"></i> </a> <a href="javascript:location.href%20=%20'mailto:'%20+%20['929lbn','163.com'].join('@')" aria-label="email"> <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss"> <i class="fas fa-rss"></i> </a>
+</div></aside><div id="main-wrapper" class="d-flex justify-content-center">
+<div class="container d-flex flex-column px-xxl-5">
+<header id="topbar-wrapper" class="flex-shrink-0" aria-label="Top Bar"><div id="topbar" class="d-flex align-items-center justify-content-between px-lg-3 h-100">
+<nav id="breadcrumb" aria-label="Breadcrumb"> <span> <a href="/">Home</a> </span> <span>Claude Code Session And Compaction</span></nav><button type="button" id="sidebar-trigger" class="btn btn-link" aria-label="Sidebar"> <i class="fas fa-bars fa-fw"></i> </button><div id="topbar-title"> Post</div>
+<button type="button" id="search-trigger" class="btn btn-link" aria-label="Search"> <i class="fas fa-search fa-fw"></i> </button> <search id="search" class="align-items-center ms-3 ms-lg-0"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> </search> <button type="button" class="btn btn-link text-decoration-none" id="search-cancel">Cancel</button>
+</div></header><div class="row flex-grow-1">
+<main aria-label="Main Content" class="col-12 col-lg-11 col-xl-9 px-md-4"><article class="px-1" data-toc="true"><header><h1 data-toc-skip>Claude Code Session And Compaction</h1>
+<div class="post-meta text-muted"> <span> Posted <time data-ts="1782230400" data-df="ll" data-bs-toggle="tooltip" data-bs-placement="bottom"> Jun 24, 2026 </time> </span><div class="d-flex justify-content-between"> <span> By <em> <a href="https://github.com/linbonanlibra">linbonanlibra</a> </em> </span><div> <span class="readtime" data-bs-toggle="tooltip" data-bs-placement="bottom" title="2596 words"> <em>14 min</em> read</span>
+</div>
+</div>
+</div></header><div id="toc-bar" class="d-flex align-items-center justify-content-between invisible"> <span class="label text-truncate">Claude Code Session And Compaction</span> <button type="button" class="toc-trigger btn me-1"> <i class="fa-solid fa-list-ul fa-fw"></i> </button>
+</div>
+<button id="toc-solo-trigger" type="button" class="toc-trigger btn btn-outline-secondary btn-sm"> <span class="label ps-2 pe-1">Contents</span> <i class="fa-solid fa-angle-right fa-fw"></i> </button> <dialog id="toc-popup" class="p-0"><div class="header d-flex flex-row align-items-center justify-content-between">
+<div class="label text-truncate py-2 ms-4">Claude Code Session And Compaction</div>
+<button id="toc-popup-close" type="button" class="btn-close btn-sm mx-3" aria-label="Close"></button>
+</div>
+<div id="toc-popup-content" class="px-4 py-3 pb-4"></div></dialog><div class="content">
+<h1 id="claude-code-session-与压缩机制原理">Claude Code Session 与压缩机制原理</h1>
+<blockquote><p>分析日期：2026-06-24<br> 源码路径：<code class="language-plaintext highlighter-rouge">src/utils/sessionStorage.ts</code> · <code class="language-plaintext highlighter-rouge">src/services/compact/</code> · <code class="language-plaintext highlighter-rouge">src/utils/messages.ts</code></p></blockquote>
+<hr>
+<h2 id="一session-的数据结构">
+<span class="me-2">一、Session 的数据结构</span><a href="#%E4%B8%80session-%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<h3 id="11-消息类型体系">
+<span class="me-2">1.1 消息类型体系</span><a href="#11-%E6%B6%88%E6%81%AF%E7%B1%BB%E5%9E%8B%E4%BD%93%E7%B3%BB" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>Session 里流通的消息统一用 <code class="language-plaintext highlighter-rouge">Message</code> 类型表示，共有以下几类：</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>类型</th>
+<th>说明</th>
+<th>是否持久化</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">UserMessage</code></td>
+<td>用户输入、工具调用结果、压缩摘要</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">AssistantMessage</code></td>
+<td>AI 的响应（含 <code class="language-plaintext highlighter-rouge">tool_use</code>、<code class="language-plaintext highlighter-rouge">thinking</code>、<code class="language-plaintext highlighter-rouge">text</code> 块）</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">SystemMessage</code></td>
+<td>系统通知，包括 <code class="language-plaintext highlighter-rouge">compact_boundary</code>、<code class="language-plaintext highlighter-rouge">api_error</code> 等子类型</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">AttachmentMessage</code></td>
+<td>文件、技能、任务状态等附件</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">ProgressMessage</code></td>
+<td>工具执行进度（UI 专用）</td>
+<td>❌ 不落盘</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">TombstoneMessage</code></td>
+<td>已删除消息的墓碑标记</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="12-消息链parentuuid-结构">
+<span class="me-2">1.2 消息链：parentUuid 结构</span><a href="#12-%E6%B6%88%E6%81%AF%E9%93%BEparentuuid-%E7%BB%93%E6%9E%84" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>每条消息包含两个核心标识符：</p>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td>
+<td class="rouge-code"><pre>消息 A (uuid: "aaa", parentUuid: null)      ← 对话起始
+    ↓
+消息 B (uuid: "bbb", parentUuid: "aaa")
+    ↓
+消息 C (uuid: "ccc", parentUuid: "bbb")     ← 当前末端（leaf）
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<ul>
+<li>消息通过 <code class="language-plaintext highlighter-rouge">parentUuid</code> 构成<strong>单向链表</strong>，不可变</li>
+<li>恢复时从 leaf 向前沿 <code class="language-plaintext highlighter-rouge">parentUuid</code> 回溯，重建完整对话链（<code class="language-plaintext highlighter-rouge">buildConversationChain()</code>）</li>
+<li>分支对话天然支持：不同 leaf 共享同一条前缀链</li>
+</ul>
+<h3 id="13-持久化格式jsonl">
+<span class="me-2">1.3 持久化格式：JSONL</span><a href="#13-%E6%8C%81%E4%B9%85%E5%8C%96%E6%A0%BC%E5%BC%8Fjsonl" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td>
+<td class="rouge-code"><pre>~/.claude/projects/&lt;projectId&gt;/&lt;sessionId&gt;.jsonl
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p>每行一条 JSON 消息，增量追加。只有 Transcript Messages（<code class="language-plaintext highlighter-rouge">user</code> / <code class="language-plaintext highlighter-rouge">assistant</code> / <code class="language-plaintext highlighter-rouge">attachment</code> / <code class="language-plaintext highlighter-rouge">system</code>）写入文件；<code class="language-plaintext highlighter-rouge">progress</code> 消息仅在内存中流转。</p>
+<hr>
+<h2 id="二压缩机制概览">
+<span class="me-2">二、压缩机制概览</span><a href="#%E4%BA%8C%E5%8E%8B%E7%BC%A9%E6%9C%BA%E5%88%B6%E6%A6%82%E8%A7%88" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p>Claude Code 有三种粒度的压缩策略，从粗到细：</p>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+<td class="rouge-code"><pre>完整压缩 (Full Compaction)
+    └─ 压缩整段对话，生成摘要替换历史
+
+部分压缩 (Partial Compaction)
+    └─ 只压缩选定范围的消息，保留其余部分
+
+微压缩 (Micro-Compaction / API Context Edit)
+    └─ 不生成摘要，直接清除 API 负载中的冗余内容（工具结果、thinking 块等）
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<hr>
+<h2 id="三完整压缩full-compaction">
+<span class="me-2">三、完整压缩（Full Compaction）</span><a href="#%E4%B8%89%E5%AE%8C%E6%95%B4%E5%8E%8B%E7%BC%A9full-compaction" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p><strong>文件</strong>：<code class="language-plaintext highlighter-rouge">src/services/compact/compact.ts</code>，核心函数 <code class="language-plaintext highlighter-rouge">compactConversation()</code>（第 387 行）</p>
+<h3 id="31-触发条件">
+<span class="me-2">3.1 触发条件</span><a href="#31-%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p><strong>自动触发</strong>（<code class="language-plaintext highlighter-rouge">autoCompact.ts</code>）：</p>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td>
+<td class="rouge-code"><pre>已用 token 数 &gt; 模型上下文窗口 - 13,000 (AUTOCOMPACT_BUFFER_TOKENS)
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p><strong>手动触发</strong>：用户执行 <code class="language-plaintext highlighter-rouge">/compact</code> 命令</p>
+<p>自动压缩有熔断机制：连续失败 3 次（<code class="language-plaintext highlighter-rouge">consecutiveFailures</code>）后停止重试，避免无效循环。</p>
+<p><strong>重要阈值常量</strong>：</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>常量</th>
+<th>值</th>
+<th>含义</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">AUTOCOMPACT_BUFFER_TOKENS</code></td>
+<td>13,000</td>
+<td>触发自动压缩的安全缓冲</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">WARNING_THRESHOLD_BUFFER_TOKENS</code></td>
+<td>20,000</td>
+<td>显示 token 警告的缓冲</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">MAX_OUTPUT_TOKENS_FOR_SUMMARY</code></td>
+<td>20,000</td>
+<td>摘要生成最大输出 token</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">MANUAL_COMPACT_BUFFER_TOKENS</code></td>
+<td>3,000</td>
+<td>手动压缩缓冲</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="32-完整执行步骤">
+<span class="me-2">3.2 完整执行步骤</span><a href="#32-%E5%AE%8C%E6%95%B4%E6%89%A7%E8%A1%8C%E6%AD%A5%E9%AA%A4" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td>
+<td class="rouge-code"><pre>1. Pre-Compact Hook
+       ↓
+2. 生成对话摘要（调用 API）
+       ↓  （失败则 PTL 重试，最多 3 次）
+3. 清理缓存（readFileState、nestedMemoryPaths）
+       ↓
+4. 生成后置附件（文件恢复、异步 Agent 状态、计划、技能等）
+       ↓
+5. 执行 Session Start Hook（模拟新会话开始）
+       ↓
+6. 创建 compact_boundary 边界标记
+       ↓
+7. Post-Compact Hook
+       ↓
+8. 返回 CompactionResult
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<h4 id="步骤-2摘要生成与-ptl-重试">
+<span class="me-2">步骤 2：摘要生成与 PTL 重试</span><a href="#%E6%AD%A5%E9%AA%A4-2%E6%91%98%E8%A6%81%E7%94%9F%E6%88%90%E4%B8%8E-ptl-%E9%87%8D%E8%AF%95" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>PTL（Prompt Too Long）是指摘要请求本身超出上下文窗口的情况。处理策略：</p>
+<div class="language-typescript highlighter-rouge">
+<div class="code-header"> <span data-label-text="TypeScript"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td>
+<td class="rouge-code"><pre><span class="c1">// truncateHeadForPTLRetry()（第 243 行）</span>
+<span class="c1">// 逐步删除最早的 API 轮组，每次重试删一批，最多重试 3 次</span>
+<span class="k">for </span><span class="p">(</span><span class="kd">let</span> <span class="nx">attempt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">attempt</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">attempt</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">await</span> <span class="nf">streamCompactSummary</span><span class="p">({</span> <span class="na">messages</span><span class="p">:</span> <span class="nx">truncatedMessages</span><span class="p">,</span> <span class="p">...</span> <span class="p">})</span>
+  <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if </span><span class="p">(</span><span class="nf">isPTLError</span><span class="p">(</span><span class="nx">e</span><span class="p">))</span> <span class="nx">truncatedMessages</span> <span class="o">=</span> <span class="nf">dropEarliestTurn</span><span class="p">(</span><span class="nx">truncatedMessages</span><span class="p">)</span>
+    <span class="k">else</span> <span class="k">throw</span> <span class="nx">e</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<h4 id="步骤-4后置附件生成">
+<span class="me-2">步骤 4：后置附件生成</span><a href="#%E6%AD%A5%E9%AA%A4-4%E5%90%8E%E7%BD%AE%E9%99%84%E4%BB%B6%E7%94%9F%E6%88%90" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>压缩后，Claude 需要重新”记住”一些关键上下文，通过附件注入：</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>附件类型</th>
+<th>数量限制</th>
+<th>说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>文件恢复附件</td>
+<td>最多 5 个</td>
+<td>压缩前最近访问的文件（<code class="language-plaintext highlighter-rouge">POST_COMPACT_MAX_FILES_TO_RESTORE = 5</code>）</td>
+</tr>
+<tr>
+<td>异步 Agent 状态</td>
+<td>—</td>
+<td>后台运行的 Agent 当前状态</td>
+</tr>
+<tr>
+<td>计划文件附件</td>
+<td>—</td>
+<td>当前 Plan 模式下的计划内容</td>
+</tr>
+<tr>
+<td>计划模式提醒</td>
+<td>—</td>
+<td>若处于 Plan 模式则注入提醒</td>
+</tr>
+<tr>
+<td>技能附件</td>
+<td>—</td>
+<td>已调用的 Skill 信息</td>
+</tr>
+<tr>
+<td>工具增量附件</td>
+<td>—</td>
+<td>新发现的工具差异</td>
+</tr>
+</tbody>
+</table></div>
+<p>token 预算：<code class="language-plaintext highlighter-rouge">POST_COMPACT_TOKEN_BUDGET = 50,000</code>（总），单文件上限 <code class="language-plaintext highlighter-rouge">5,000</code>，技能总上限 <code class="language-plaintext highlighter-rouge">25,000</code>。</p>
+<h3 id="33-compactionresult-结构">
+<span class="me-2">3.3 CompactionResult 结构</span><a href="#33-compactionresult-%E7%BB%93%E6%9E%84" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="language-typescript highlighter-rouge">
+<div class="code-header"> <span data-label-text="TypeScript"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td>
+<td class="rouge-code"><pre><span class="kr">interface</span> <span class="nx">CompactionResult</span> <span class="p">{</span>
+  <span class="nl">boundaryMarker</span><span class="p">:</span> <span class="nx">SystemCompactBoundaryMessage</span>  <span class="c1">// 边界标记（必须）</span>
+  <span class="nx">summaryMessages</span><span class="p">:</span> <span class="nx">UserMessage</span><span class="p">[]</span>               <span class="c1">// 摘要消息（必须）</span>
+  <span class="nx">attachments</span><span class="p">:</span> <span class="nx">AttachmentMessage</span><span class="p">[]</span>             <span class="c1">// 后置附件</span>
+  <span class="nx">hookResults</span><span class="p">:</span> <span class="nx">HookResultMessage</span><span class="p">[]</span>             <span class="c1">// 钩子结果</span>
+  <span class="nx">messagesToKeep</span><span class="p">?:</span> <span class="nx">Message</span><span class="p">[]</span>                   <span class="c1">// 部分压缩时保留的消息</span>
+  <span class="nx">userDisplayMessage</span><span class="p">?:</span> <span class="kr">string</span>                  <span class="c1">// 给用户的展示文字</span>
+  <span class="nx">preCompactTokenCount</span><span class="p">?:</span> <span class="kr">number</span>                <span class="c1">// 压缩前 token 数</span>
+  <span class="nx">postCompactTokenCount</span><span class="p">?:</span> <span class="kr">number</span>               <span class="c1">// 摘要 API 调用消耗的 token</span>
+  <span class="nx">truePostCompactTokenCount</span><span class="p">?:</span> <span class="kr">number</span>           <span class="c1">// 压缩后真实上下文 token 数</span>
+  <span class="nx">compactionUsage</span><span class="p">?:</span> <span class="nx">TokenUsage</span>                 <span class="c1">// 详细 token 用量</span>
+<span class="p">}</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<hr>
+<h2 id="四compact_boundary-边界标记">
+<span class="me-2">四、compact_boundary 边界标记</span><a href="#%E5%9B%9Bcompact_boundary-%E8%BE%B9%E7%95%8C%E6%A0%87%E8%AE%B0" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p>压缩完成后，在消息链中插入一条 <code class="language-plaintext highlighter-rouge">SystemCompactBoundaryMessage</code>，作为”分水岭”：</p>
+<div class="language-typescript highlighter-rouge">
+<div class="code-header"> <span data-label-text="TypeScript"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td>
+<td class="rouge-code"><pre><span class="c1">// messages.ts，createCompactBoundaryMessage()</span>
+<span class="p">{</span>
+  <span class="nl">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">system</span><span class="dl">'</span><span class="p">,</span>
+  <span class="nx">subtype</span><span class="p">:</span> <span class="dl">'</span><span class="s1">compact_boundary</span><span class="dl">'</span><span class="p">,</span>
+  <span class="nx">content</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Conversation compacted</span><span class="dl">'</span><span class="p">,</span>
+  <span class="nx">level</span><span class="p">:</span> <span class="dl">'</span><span class="s1">info</span><span class="dl">'</span><span class="p">,</span>
+  <span class="nx">uuid</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;新 UUID&gt;</span><span class="dl">'</span><span class="p">,</span>
+  <span class="nx">timestamp</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;ISO 8601&gt;</span><span class="dl">'</span><span class="p">,</span>
+  <span class="nx">compactMetadata</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">trigger</span><span class="p">:</span> <span class="dl">'</span><span class="s1">auto</span><span class="dl">'</span> <span class="o">|</span> <span class="dl">'</span><span class="s1">manual</span><span class="dl">'</span><span class="p">,</span>  <span class="c1">// 触发方式</span>
+    <span class="nx">preTokens</span><span class="p">:</span> <span class="mi">128000</span><span class="p">,</span>            <span class="c1">// 压缩前的 token 数</span>
+    <span class="nx">userContext</span><span class="p">?:</span> <span class="kr">string</span><span class="p">,</span>          <span class="c1">// 用户自定义说明（手动压缩时）</span>
+    <span class="nx">messagesSummarized</span><span class="p">?:</span> <span class="kr">number</span><span class="p">,</span>   <span class="c1">// 被压缩的消息条数</span>
+    <span class="nx">preservedSegment</span><span class="p">?:</span> <span class="p">{</span>           <span class="c1">// 部分压缩时保留段的边界信息</span>
+      <span class="na">headUuid</span><span class="p">:</span> <span class="nx">UUID</span><span class="p">,</span>   <span class="c1">// 保留段第一条消息</span>
+      <span class="na">anchorUuid</span><span class="p">:</span> <span class="nx">UUID</span><span class="p">,</span> <span class="c1">// 锚点（边界前最后一条消息）</span>
+      <span class="na">tailUuid</span><span class="p">:</span> <span class="nx">UUID</span><span class="p">,</span>   <span class="c1">// 保留段最后一条消息</span>
+    <span class="p">},</span>
+    <span class="nx">preCompactDiscoveredTools</span><span class="p">?:</span> <span class="kr">string</span><span class="p">[],</span>  <span class="c1">// 压缩前发现的工具列表</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p><strong>读取逻辑</strong>：<code class="language-plaintext highlighter-rouge">getMessagesAfterCompactBoundary()</code> 找到最后一个 <code class="language-plaintext highlighter-rouge">compact_boundary</code>，只返回其后的消息发送给 API，之前的历史由摘要替代。</p>
+<hr>
+<h2 id="五部分压缩partial-compaction">
+<span class="me-2">五、部分压缩（Partial Compaction）</span><a href="#%E4%BA%94%E9%83%A8%E5%88%86%E5%8E%8B%E7%BC%A9partial-compaction" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p><strong>文件</strong>：<code class="language-plaintext highlighter-rouge">compact.ts</code>，<code class="language-plaintext highlighter-rouge">partialCompactConversation()</code>（第 772 行）</p>
+<p>部分压缩只压缩消息列表中的某个片段，由 <code class="language-plaintext highlighter-rouge">pivotIndex</code>（枢轴索引）和 <code class="language-plaintext highlighter-rouge">direction</code> 控制：</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>direction</th>
+<th>含义</th>
+<th>适用场景</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">'from'</code></td>
+<td>压缩 pivotIndex <strong>之后</strong>的消息，保留之前的</td>
+<td>保留缓存前缀，节省 API 缓存命中</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">'up_to'</code></td>
+<td>压缩 pivotIndex <strong>之前</strong>的消息，保留之后的</td>
+<td>保留最新上下文，缓存失效</td>
+</tr>
+</tbody>
+</table></div>
+<p>边界标记中会写入 <code class="language-plaintext highlighter-rouge">preservedSegment</code>，记录保留段的首尾 UUID，方便恢复时精确定位。</p>
+<hr>
+<h2 id="六微压缩micro-compaction--api-context-edit">
+<span class="me-2">六、微压缩（Micro-Compaction / API Context Edit）</span><a href="#%E5%85%AD%E5%BE%AE%E5%8E%8B%E7%BC%A9micro-compaction--api-context-edit" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p><strong>文件</strong>：<code class="language-plaintext highlighter-rouge">src/services/compact/apiMicrocompact.ts</code></p>
+<p>微压缩不生成摘要，而是在发送 API 请求前<strong>直接清除消息体中的冗余内容</strong>，两种策略：</p>
+<h3 id="策略一clear_tool_uses_20250919">
+<span class="me-2">策略一：<code class="language-plaintext highlighter-rouge">clear_tool_uses_20250919</code></span><a href="#%E7%AD%96%E7%95%A5%E4%B8%80clear_tool_uses_20250919" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>清除历史工具调用的输入/输出，减少上下文体积：</p>
+<div class="language-typescript highlighter-rouge">
+<div class="code-header"> <span data-label-text="TypeScript"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+<td class="rouge-code"><pre><span class="p">{</span>
+  <span class="nl">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">clear_tool_uses_20250919</span><span class="dl">'</span><span class="p">,</span>
+  <span class="nx">trigger</span><span class="p">?:</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">input_tokens</span><span class="dl">'</span><span class="p">;</span> <span class="nl">value</span><span class="p">:</span> <span class="kr">number</span> <span class="p">},</span>  <span class="c1">// 超过阈值才触发</span>
+  <span class="nx">keep</span><span class="p">?:</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">tool_uses</span><span class="dl">'</span><span class="p">;</span> <span class="nl">value</span><span class="p">:</span> <span class="kr">number</span> <span class="p">},</span>          <span class="c1">// 保留最近 N 次工具调用</span>
+  <span class="nx">clear_tool_inputs</span><span class="p">?:</span> <span class="nx">boolean</span> <span class="o">|</span> <span class="kr">string</span><span class="p">[],</span>               <span class="c1">// 清除工具输入</span>
+  <span class="nx">exclude_tools</span><span class="p">?:</span> <span class="kr">string</span><span class="p">[],</span>                             <span class="c1">// 排除某些工具不清</span>
+  <span class="nx">clear_at_least</span><span class="p">?:</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">input_tokens</span><span class="dl">'</span><span class="p">;</span> <span class="nl">value</span><span class="p">:</span> <span class="kr">number</span> <span class="p">}</span>
+<span class="p">}</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p><strong>结果清理的工具</strong>（输出大）：Bash、PowerShell、Glob、Grep、FileRead、WebFetch、WebSearch<br> <strong>使用清理的工具</strong>（输入大）：FileEdit、FileWrite、NotebookEdit</p>
+<h3 id="策略二clear_thinking_20251015">
+<span class="me-2">策略二：<code class="language-plaintext highlighter-rouge">clear_thinking_20251015</code></span><a href="#%E7%AD%96%E7%95%A5%E4%BA%8Cclear_thinking_20251015" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>清除 Extended Thinking 产生的 <code class="language-plaintext highlighter-rouge">thinking</code> 块：</p>
+<div class="language-typescript highlighter-rouge">
+<div class="code-header"> <span data-label-text="TypeScript"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td>
+<td class="rouge-code"><pre><span class="p">{</span>
+  <span class="nl">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">clear_thinking_20251015</span><span class="dl">'</span><span class="p">,</span>
+  <span class="nx">keep</span><span class="p">:</span> <span class="p">{</span> <span class="nl">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">thinking_turns</span><span class="dl">'</span><span class="p">;</span> <span class="nl">value</span><span class="p">:</span> <span class="mi">2</span> <span class="p">}</span> <span class="o">|</span> <span class="dl">'</span><span class="s1">all</span><span class="dl">'</span>  <span class="c1">// 保留最近 N 轮的 thinking</span>
+<span class="p">}</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<hr>
+<h2 id="七session-memory会话笔记">
+<span class="me-2">七、Session Memory（会话笔记）</span><a href="#%E4%B8%83session-memory%E4%BC%9A%E8%AF%9D%E7%AC%94%E8%AE%B0" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p><strong>文件</strong>：<code class="language-plaintext highlighter-rouge">src/services/SessionMemory/sessionMemory.ts</code></p>
+<p>Session Memory 是一个<strong>自动维护的 Markdown 文件</strong>，由后台 Agent 定期从对话中提取关键信息并更新，作为超长会话的”外部记忆”。</p>
+<h3 id="71-触发条件">
+<span class="me-2">7.1 触发条件</span><a href="#71-%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+<td class="rouge-code"><pre>shouldExtractMemory() = true  当且仅当：
+
+  初始化阈值：token 数达到 minimumMessageTokensToInit  （首次触发前提）
+
+  之后每次：
+    (token 增量 &gt;= minimumTokensBetweenUpdate)
+    AND
+    (自上次更新后的工具调用数 &gt;= toolCallsBetweenUpdates)
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<h3 id="72-提取流程">
+<span class="me-2">7.2 提取流程</span><a href="#72-%E6%8F%90%E5%8F%96%E6%B5%81%E7%A8%8B" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td>
+<td class="rouge-code"><pre>1. 判断是否需要提取（shouldExtractMemory）
+       ↓
+2. 设置 Session Memory 文件路径
+       ↓
+3. 读取现有 Memory 内容（currentMemory）
+       ↓
+4. 构建更新 Prompt（包含对话历史 + 旧 Memory）
+       ↓
+5. 启动 Fork Agent（querySource: 'session_memory'）
+       ↓
+6. Fork Agent 只能操作 Memory 文件（canUseTool 限制）
+       ↓
+7. 更新计数器（recordExtractionTokenCount, updateLastSummarizedMessageId）
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<h3 id="73-配置项">
+<span class="me-2">7.3 配置项</span><a href="#73-%E9%85%8D%E7%BD%AE%E9%A1%B9" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="language-typescript highlighter-rouge">
+<div class="code-header"> <span data-label-text="TypeScript"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td>
+<td class="rouge-code"><pre><span class="kd">type</span> <span class="nx">SessionMemoryConfig</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">minimumMessageTokensToInit</span><span class="p">:</span> <span class="kr">number</span>   <span class="c1">// 启动 Memory 的最低 token 阈值</span>
+  <span class="na">minimumTokensBetweenUpdate</span><span class="p">:</span> <span class="kr">number</span>   <span class="c1">// 两次更新的最小 token 间隔</span>
+  <span class="na">toolCallsBetweenUpdates</span><span class="p">:</span> <span class="kr">number</span>      <span class="c1">// 两次更新间的最小工具调用次数</span>
+<span class="p">}</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<hr>
+<h2 id="八session-恢复机制">
+<span class="me-2">八、Session 恢复机制</span><a href="#%E5%85%ABsession-%E6%81%A2%E5%A4%8D%E6%9C%BA%E5%88%B6" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p><strong>文件</strong>：<code class="language-plaintext highlighter-rouge">src/utils/sessionRestore.ts</code>，<code class="language-plaintext highlighter-rouge">src/utils/conversationRecovery.ts</code></p>
+<h3 id="81-恢复入口restoresessionstatefromlog第-99-行">
+<span class="me-2">8.1 恢复入口：<code class="language-plaintext highlighter-rouge">restoreSessionStateFromLog()</code>（第 99 行）</span><a href="#81-%E6%81%A2%E5%A4%8D%E5%85%A5%E5%8F%A3restoresessionstatefromlog%E7%AC%AC-99-%E8%A1%8C" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td>
+<td class="rouge-code"><pre>1. 文件历史快照恢复 (fileHistorySnapshots)
+2. Commit 归属状态恢复 (attributionSnapshots)
+3. 上下文折叠状态恢复 (contextCollapseCommits)
+4. Todos 提取 (extractTodosFromTranscript)
+5. 消息链重建 (buildConversationChain)
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<h3 id="82-消息链重建buildconversationchain">
+<span class="me-2">8.2 消息链重建：<code class="language-plaintext highlighter-rouge">buildConversationChain()</code></span><a href="#82-%E6%B6%88%E6%81%AF%E9%93%BE%E9%87%8D%E5%BB%BAbuildconversationchain" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="language-typescript highlighter-rouge">
+<div class="code-header"> <span data-label-text="TypeScript"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td>
+<td class="rouge-code"><pre><span class="c1">// sessionStorage.ts，~第 1100 行</span>
+<span class="kd">function</span> <span class="nf">buildConversationChain</span><span class="p">(</span>
+  <span class="nx">messages</span><span class="p">:</span> <span class="nb">Map</span><span class="o">&lt;</span><span class="nx">UUID</span><span class="p">,</span> <span class="nx">TranscriptMessage</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="nx">leafMessage</span><span class="p">:</span> <span class="nx">TranscriptMessage</span><span class="p">,</span>
+<span class="p">):</span> <span class="nx">TranscriptMessage</span><span class="p">[]</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">transcript</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="kd">let</span> <span class="nx">current</span> <span class="o">=</span> <span class="nx">leafMessage</span>
+  <span class="k">while </span><span class="p">(</span><span class="nx">current</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">transcript</span><span class="p">.</span><span class="nf">unshift</span><span class="p">(</span><span class="nx">current</span><span class="p">)</span>              <span class="c1">// 向前插入，保证时序正确</span>
+    <span class="nx">current</span> <span class="o">=</span> <span class="nx">messages</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="nx">current</span><span class="p">.</span><span class="nx">parentUuid</span><span class="p">)</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">transcript</span>  <span class="c1">// 完整的时间正序消息链</span>
+<span class="p">}</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p>循环检测：通过 <code class="language-plaintext highlighter-rouge">seen: Set&lt;UUID&gt;</code> 防止 <code class="language-plaintext highlighter-rouge">parentUuid</code> 成环导致死循环。</p>
+<h3 id="83-压缩后的消息加载">
+<span class="me-2">8.3 压缩后的消息加载</span><a href="#83-%E5%8E%8B%E7%BC%A9%E5%90%8E%E7%9A%84%E6%B6%88%E6%81%AF%E5%8A%A0%E8%BD%BD" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>JSONL 文件中 <code class="language-plaintext highlighter-rouge">compact_boundary</code> 之前的消息都会被加载到内存 Map，但发送给 API 时只取边界之后的部分：</p>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td>
+<td class="rouge-code"><pre>JSONL 文件：[...历史消息...] [compact_boundary] [摘要消息] [...新消息...]
+                    ↑                                            ↑
+             恢复状态用                                       发送给 API
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<hr>
+<h2 id="九整体架构图">
+<span class="me-2">九、整体架构图</span><a href="#%E4%B9%9D%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84%E5%9B%BE" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<div class="language-plaintext highlighter-rouge">
+<div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td>
+<td class="rouge-code"><pre>用户输入
+    ↓
+Session（JSONL 持久化，parentUuid 链表）
+    ├─ 消息实时追加
+    ├─ token 计数监控
+    │
+    ├─ [token 接近上限] ──→ Auto-Compact ──→ compactConversation()
+    │                                              ├─ 调 API 生成摘要
+    │                                              ├─ 插入 compact_boundary
+    │                                              └─ 注入后置附件
+    │
+    ├─ [API 请求前] ──→ Micro-Compact ──→ 清除冗余工具结果/thinking 块
+    │
+    └─ [后台定期] ──→ Session Memory ──→ 外部 Markdown 笔记文件
+
+Session 恢复：
+    JSONL 文件 → buildConversationChain() → 重建消息链
+              → getMessagesAfterCompactBoundary() → 只发边界后的消息给 API
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<hr>
+<h2 id="十关键函数速查">
+<span class="me-2">十、关键函数速查</span><a href="#%E5%8D%81%E5%85%B3%E9%94%AE%E5%87%BD%E6%95%B0%E9%80%9F%E6%9F%A5" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<h3 id="压缩">
+<span class="me-2">压缩</span><a href="#%E5%8E%8B%E7%BC%A9" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>函数</th>
+<th>文件</th>
+<th>行号</th>
+<th>说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">compactConversation()</code></td>
+<td><code class="language-plaintext highlighter-rouge">compact/compact.ts</code></td>
+<td>387</td>
+<td>完整压缩入口</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">partialCompactConversation()</code></td>
+<td><code class="language-plaintext highlighter-rouge">compact/compact.ts</code></td>
+<td>772</td>
+<td>部分压缩入口</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">truncateHeadForPTLRetry()</code></td>
+<td><code class="language-plaintext highlighter-rouge">compact/compact.ts</code></td>
+<td>243</td>
+<td>PTL 错误重试截断</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">buildPostCompactMessages()</code></td>
+<td><code class="language-plaintext highlighter-rouge">compact/compact.ts</code></td>
+<td>330</td>
+<td>构建压缩后消息数组</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">createPostCompactFileAttachments()</code></td>
+<td><code class="language-plaintext highlighter-rouge">compact/compact.ts</code></td>
+<td>1415</td>
+<td>文件恢复附件</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">getAutoCompactThreshold()</code></td>
+<td><code class="language-plaintext highlighter-rouge">compact/autoCompact.ts</code></td>
+<td>72</td>
+<td>自动压缩阈值计算</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">isAutoCompactEnabled()</code></td>
+<td><code class="language-plaintext highlighter-rouge">compact/autoCompact.ts</code></td>
+<td>147</td>
+<td>是否启用自动压缩</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="消息处理">
+<span class="me-2">消息处理</span><a href="#%E6%B6%88%E6%81%AF%E5%A4%84%E7%90%86" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>函数</th>
+<th>文件</th>
+<th>行号</th>
+<th>说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">createCompactBoundaryMessage()</code></td>
+<td><code class="language-plaintext highlighter-rouge">utils/messages.ts</code></td>
+<td>~4800</td>
+<td>创建边界标记</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">annotateBoundaryWithPreservedSegment()</code></td>
+<td><code class="language-plaintext highlighter-rouge">utils/messages.ts</code></td>
+<td>~4820</td>
+<td>写入保留段元数据</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">getMessagesAfterCompactBoundary()</code></td>
+<td><code class="language-plaintext highlighter-rouge">utils/messages.ts</code></td>
+<td>~5000</td>
+<td>取边界后的消息</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">isCompactBoundaryMessage()</code></td>
+<td><code class="language-plaintext highlighter-rouge">utils/messages.ts</code></td>
+<td>~5100</td>
+<td>判断是否为边界标记</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="session-存储与恢复">
+<span class="me-2">Session 存储与恢复</span><a href="#session-%E5%AD%98%E5%82%A8%E4%B8%8E%E6%81%A2%E5%A4%8D" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>函数</th>
+<th>文件</th>
+<th>行号</th>
+<th>说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">getTranscriptPath()</code></td>
+<td><code class="language-plaintext highlighter-rouge">utils/sessionStorage.ts</code></td>
+<td>202</td>
+<td>获取 JSONL 文件路径</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">buildConversationChain()</code></td>
+<td><code class="language-plaintext highlighter-rouge">utils/sessionStorage.ts</code></td>
+<td>~1100</td>
+<td>重建 parentUuid 消息链</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">loadTranscriptFile()</code></td>
+<td><code class="language-plaintext highlighter-rouge">utils/sessionStorage.ts</code></td>
+<td>~1150</td>
+<td>完整加载 JSONL 文件</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">isTranscriptMessage()</code></td>
+<td><code class="language-plaintext highlighter-rouge">utils/sessionStorage.ts</code></td>
+<td>139</td>
+<td>判断是否持久化消息</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">restoreSessionStateFromLog()</code></td>
+<td><code class="language-plaintext highlighter-rouge">utils/sessionRestore.ts</code></td>
+<td>99</td>
+<td>Session 恢复入口</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="session-memory">
+<span class="me-2">Session Memory</span><a href="#session-memory" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th>函数</th>
+<th>文件</th>
+<th>行号</th>
+<th>说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">shouldExtractMemory()</code></td>
+<td><code class="language-plaintext highlighter-rouge">SessionMemory/sessionMemory.ts</code></td>
+<td>134</td>
+<td>判断是否触发提取</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">extractSessionMemory()</code></td>
+<td><code class="language-plaintext highlighter-rouge">SessionMemory/sessionMemory.ts</code></td>
+<td>272</td>
+<td>自动提取入口</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">manuallyExtractSessionMemory()</code></td>
+<td><code class="language-plaintext highlighter-rouge">SessionMemory/sessionMemory.ts</code></td>
+<td>387</td>
+<td>手动触发提取</td>
+</tr>
+<tr>
+<td><code class="language-plaintext highlighter-rouge">countToolCallsSince()</code></td>
+<td><code class="language-plaintext highlighter-rouge">SessionMemory/sessionMemory.ts</code></td>
+<td>108</td>
+<td>统计工具调用次数</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="post-tail-wrapper text-muted">
+<div class="d-flex justify-content-between align-items-center gap-3 mb-3"></div>
+<div class=" post-tail-bottom d-flex justify-content-between align-items-center mt-5 pb-2 ">
+<div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div>
+<div class="share-wrapper d-flex align-items-center"> <span class="share-label text-muted">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Claude%20Code%20Session%20And%20Compaction%20-%2024601&url=https%3A%2F%2Flinbonanlibra.github.io%2Fposts%2Fclaude-code-session-and-compaction%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter" aria-label="Twitter"> <i class="fa-fw fa-brands fa-square-x-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Claude%20Code%20Session%20And%20Compaction%20-%2024601&u=https%3A%2F%2Flinbonanlibra.github.io%2Fposts%2Fclaude-code-session-and-compaction%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=https%3A%2F%2Flinbonanlibra.github.io%2Fposts%2Fclaude-code-session-and-compaction%2F&text=Claude%20Code%20Session%20And%20Compaction%20-%2024601" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Telegram" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <button id="copy-link" aria-label="Copy link" class="btn small" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy link" data-title-succeed="Link copied successfully!"> <i class="fa-fw fas fa-link pe-none fs-6"></i> </button> </span>
+</div>
+</div>
+</div></article></main><aside aria-label="Panel" id="panel-wrapper" class="col-xl-3 ps-2 text-muted"><div class="access">
+<section id="access-lastmod"><h2 class="panel-heading">Recently Updated</h2>
+<ul class="content list-unstyled ps-0 pb-1 ms-1 mt-2">
+<li class="text-truncate lh-lg"> <a href="/posts/MQ(KAKFA-RocketMQ)/">Mq(kakfa Rocketmq)</a>
+</li>
+<li class="text-truncate lh-lg"> <a href="/posts/RocketMq-Features/">Rocketmq features</a>
+</li>
+<li class="text-truncate lh-lg"> <a href="/posts/KMS%E7%B3%BB%E7%BB%9F%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">Kms系统基本知识</a>
+</li>
+<li class="text-truncate lh-lg"> <a href="/posts/Redis-listpack/">Redis Listpack</a>
+</li>
+<li class="text-truncate lh-lg"> <a href="/posts/SDS/">Sds</a>
+</li>
+</ul></section><section><h2 class="panel-heading">Trending Tags</h2>
+<div class="d-flex flex-wrap mt-3 mb-1 me-3"> <a class="post-tag btn btn-outline-primary" href="/tags/note/">note</a> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">AI</a> <a class="post-tag btn btn-outline-primary" href="/tags/memory/">Memory</a> <a class="post-tag btn btn-outline-primary" href="/tags/typography/">typography</a>
+</div></section>
+</div>
+<div class="toc-border-cover z-3"></div>
+<section id="toc-wrapper" class="invisible position-sticky ps-0 pe-4 pb-4"><h2 class="panel-heading ps-3 pb-2 mb-0">Contents</h2>
+<nav id="toc"></nav></section></aside>
+</div>
+<div class="row"><div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 px-md-4">
+<nav class="post-navigation d-flex justify-content-between" aria-label="Post Navigation"> <a href="/posts/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80-%E7%AC%94%E8%AE%B0/" class="btn btn-outline-primary" aria-label="Older"><p>《大模型基础》阅读笔记</p></a> <a href="/posts/claude-code-tool-state-machine/" class="btn btn-outline-primary" aria-label="Newer"><p>Claude Code Tool State Machine</p></a></nav><footer aria-label="Site Info" class=" d-flex flex-column justify-content-center text-muted flex-lg-row justify-content-lg-between align-items-lg-center pb-lg-3 "><p>© <time>2026</time> <a href="https://github.com/linbonanlibra">linbonanlibra</a>. <span data-bs-toggle="tooltip" data-bs-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p>
+<p>Using the <a data-bs-toggle="tooltip" data-bs-placement="top" title="v7.6.0" href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme for <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a>.</p></footer>
+</div></div>
+<div id="search-result-wrapper" class="d-flex justify-content-center d-none"><div class="col-11 content">
+<div id="search-hints"><section><h2 class="panel-heading">Trending Tags</h2>
+<div class="d-flex flex-wrap mt-3 mb-1 me-3"> <a class="post-tag btn btn-outline-primary" href="/tags/note/">note</a> <a class="post-tag btn btn-outline-primary" href="/tags/ai/">AI</a> <a class="post-tag btn btn-outline-primary" href="/tags/memory/">Memory</a> <a class="post-tag btn btn-outline-primary" href="/tags/typography/">typography</a>
+</div></section></div>
+<div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div>
+</div></div>
+</div>
+<aside aria-label="Scroll to Top"> <button id="back-to-top" type="button" class="btn btn-lg btn-box-shadow"> <i class="fas fa-angle-up"></i> </button></aside>
+</div>
+<div id="mask" class="d-none position-fixed w-100 h-100 z-1"></div>
+<aside id="notification" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-animation="true" data-bs-autohide="false"><div class="toast-header"> <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+</div>
+<div class="toast-body text-center pt-0">
+<p class="px-2 mb-3">New content available</p>
+<button type="button" class="btn btn-primary" aria-label="Update"> Update </button>
+</div></aside><script> document.addEventListener('DOMContentLoaded', () => { SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<article class="px-1 px-sm-2 px-lg-4 px-xl-0"><header><h2><a href="{url}">{title}</a></h2><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div></header><p>{content}</p></article>', noResultsText: '<p class="mt-5">Oops! No results found.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="me-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); }); </script>
+</body>
+</html>
